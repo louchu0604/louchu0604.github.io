@@ -1,0 +1,49 @@
+fancybox: true
+duoshuo: 
+disqus: louchu0604
+google_search: true
+baidu_search: 
+swiftype: 
+tinysou: 
+self_search: 
+google_analytics: 
+baidu_analytics: 
+shareto: true
+busuanzi: true
+
+menu:
+  - page: home
+    directory: .
+    icon: fa-home
+  - page: archive
+    directory: archives/
+    icon: fa-archive
+  - page: about
+    directory: about/
+    icon: fa-user
+  - page: rss
+    directory: atom.xml
+    icon: fa-rss
+
+widgets: 
+  - search
+  - category
+  - tag
+  - recent_posts
+  - recent_comments
+  - links
+
+links:
+  - title: site-name1
+    url: http://www.example1.com/
+  - title: site-name2
+    url: http://www.example2.com/
+  - title: site-name3
+    url: http://www.example3.com/
+
+# Static files
+js: js
+css: css
+
+# Theme version
+version: 0.0.0
