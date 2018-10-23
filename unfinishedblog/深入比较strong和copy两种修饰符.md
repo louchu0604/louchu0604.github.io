@@ -46,7 +46,54 @@ objCopy:0x6000018d9160
 
 
 二、从源码看strong的底层原理
+（备注 我看的版本是objc4-723）
+在NSObject.mm line294中可以看到以下代码
+```objc
+objc_storeStrong(id *location, id obj)
+{
+    id prev = *location;
+    if (obj == prev) {
+        return;
+    }
+    objc_retain(obj);
+    *location = obj;
+    objc_release(prev);
+}
+```
+首先判断和之前的引用是否相同
+若不同，往下执行，retain obj并释放之前的引用（旧的引用对象rc--）
 
 
-三、从源码看copy的底层原理
+三、copy 
+在objc-runtime-new.mm line 6219
+```objc
+_object_copyFromZone(id oldObj, size_t extraBytes, void *zone)
+{
+    if (!oldObj) return nil;
+    if (oldObj->isTaggedPointer()) return oldObj;
+
+    // fixme this doesn't handle C++ ivars correctly (#4619414)
+
+    Class cls = oldObj->ISA();
+    size_t size;
+    id obj = _class_createInstanceFromZone(cls, extraBytes, zone, false, &size);
+    if (!obj) return nil;
+
+    // Copy everything except the isa, which was already set above.
+    uint8_t *copyDst = (uint8_t *)obj + sizeof(Class);
+    uint8_t *copySrc = (uint8_t *)oldObj + sizeof(Class);
+    size_t copySize = size - sizeof(Class);
+    memmove(copyDst, copySrc, copySize);
+
+    fixupCopiedIvars(obj, oldObj);
+
+    return obj;
+}
+```
+可以看到这句
+```objc
+id obj = _class_createInstanceFromZone(cls, extraBytes, zone, false, &size);
+
+```
+
 
