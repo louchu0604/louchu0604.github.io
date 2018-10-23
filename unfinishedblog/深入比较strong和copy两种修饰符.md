@@ -1,22 +1,52 @@
 strong和copy是property的两个基本修饰符，在oc中，一般情况下用来修饰对象。
 strong：property的默认修饰符。
-copy：一般用来修饰拥有可变对象类型的不可变对象类型。比如NSString NSDictionary NSArray.
+copy：一般用来修饰拥有可变类型的对象。比如NSString NSDictionary NSArray.
 在学习oc的过程中，大多数的资料里都提到了以上两点，却没有详细说明这么做的原因。
 本文旨在oc底层实现的基础上探讨以上两点的原因和合理性。
 
-第一部分：先举很简单的例子来比较两者的区别
+一、strong和copy的不同、以及为什么NSString等对象一般用copy来修饰？
+对象使用strong和copy修饰后，都可以让对象的RC＋1。其不同点可以看一下代码。
+```objc
 
-第二部分：从源码的角度来探讨问题
-
+@property (nonatomic,strong) id objStrong;
+@property (nonatomic,copy)   id objCopy;
 
-part one ：strong对象的底层实现
-首先来看一段伪代码：
-id obj= [[nsobject allo] init];
-使用clang命令将以上代码转换成c++格式
-clang -rewrite-objc 
-<!-- 这里讲述strong对象生成的过程 弄清主要步骤 -->
-<!-- z -->
+id obj = [[NSMutableDictionary alloc] init];
+[obj setValue:@"hello" forKey:@"objValue"];
+self.objStrong = obj;
+self.objCopy = [obj copy];
+NSLog(@"before obj changed---objStrong:%@  objCopy:%@",[self.objStrong valueForKey:@"objValue"],[self.objCopy valueForKey:@"objValue"]);
 
-part two：copy对象的底层实现
+[obj setValue:@"changed" forKey:@"objValue"];
+NSLog(@"after obj changed---objStrong:%@  objCopy:%@",[self.objStrong valueForKey:@"objValue"],[self.objCopy valueForKey:@"objValue"]);
 
-<!-- 这里讲copy -->
+```
+可以来查看一下输出
+```objc
+before obj changed---objStrong:hello  objCopy:hello
+after obj changed---objStrong:changed  objCopy:hello
+
+```
+可以看到copy修饰的对象在obj改变前后没有发生变化，而strong修饰的对象则相反。
+可以肯定的是，objStrong和objCopy指向的不是同一个对象。
+打印对象地址来验证一下：
+```objc
+NSLog(@"\rcompare address \robj:%p \robjStrong:%p \robjCopy:%p",obj,self.objStrong,self.objCopy);
+```
+查看输出：
+```objc
+compare address 
+obj:0x6000018d9180 
+objStrong:0x6000018d9180 
+objCopy:0x6000018d9160
+```
+可以看到指向的是堆中两块不同的内存,其中objStrong指向的内存地址与obj的相同。
+换句话说，strong修饰的属性没有开辟新的内存空间。而copy修饰的属性开辟了新的内存空间。
+在属性不希望被外部修改的时候，我们可以用copy来修饰。原因如上例子所述。
+
+
+二、从源码看strong的底层原理
+
+
+三、从源码看copy的底层原理
+
