@@ -305,7 +305,7 @@ weak_unregister_no_lock(weak_table_t *weak_table, id referent_id,
                 }
             }
         }
-
+//如果该entry为空 则删除之
         if (empty) {
             weak_entry_remove(weak_table, entry);
         }
@@ -339,13 +339,16 @@ weak_register_no_lock(weak_table_t *weak_table, id referent_id,
     objc_object **referrer = (objc_object **)referrer_id;
 
     if (!referent  ||  referent->isTaggedPointer()) return referent_id;
-
+    //判断被引用的对象存活
     // ensure that the referenced object is viable
     bool deallocating;
+    // 是否支持内存管理
     if (!referent->ISA()->hasCustomRR()) {
+        //定义为是否正在销毁
         deallocating = referent->rootIsDeallocating();
     }
     else {
+        //允许弱引用
         BOOL (*allowsWeakReference)(objc_object *, SEL) = 
             (BOOL(*)(objc_object *, SEL))
             object_getMethodImplementation((id)referent, 
@@ -358,6 +361,7 @@ weak_register_no_lock(weak_table_t *weak_table, id referent_id,
     }
 
     if (deallocating) {
+        //crashIfDeallocating为true时（篇首有提到）,结束进程
         if (crashIfDeallocating) {
             _objc_fatal("Cannot form weak reference to instance (%p) of "
                         "class %s. It is possible that this object was "
@@ -390,7 +394,6 @@ weak_register_no_lock(weak_table_t *weak_table, id referent_id,
 }
 
 ```
-未完待续
 
 对象释放,引用计数为0时 的调用顺序如下：
 * objc_release
@@ -409,7 +412,7 @@ void
 weak_clear_no_lock(weak_table_t *weak_table, id referent_id) 
 {
     objc_object *referent = (objc_object *)referent_id;
-
+// 取出该对象的weak_entry
     weak_entry_t *entry = weak_entry_for_referent(weak_table, referent);
     if (entry == nil) {
         /// XXX shouldn't happen, but does with mismatched CF/objc
@@ -421,6 +424,7 @@ weak_clear_no_lock(weak_table_t *weak_table, id referent_id)
     weak_referrer_t *referrers;
     size_t count;
     
+    //判断采用的是定长数组还是动态数组
     if (entry->out_of_line()) {
         referrers = entry->referrers;
         count = TABLE_SIZE(entry);
@@ -429,7 +433,7 @@ weak_clear_no_lock(weak_table_t *weak_table, id referent_id)
         referrers = entry->inline_referrers;
         count = WEAK_INLINE_COUNT;
     }
-    
+    //遍历weak_entry 置为nil
     for (size_t i = 0; i < count; ++i) {
         objc_object **referrer = referrers[i];
         if (referrer) {
@@ -450,6 +454,7 @@ weak_clear_no_lock(weak_table_t *weak_table, id referent_id)
     weak_entry_remove(weak_table, entry);
 }
 ```
-
-
-对象赋值给weak对象时 流程示意
+# 看到这里就破案啦，
+* SideTables是一个全局的Hash表，里面存放了对象的weak指针和引用计数。里面装的是SideTable。对象的内存地址为key ，weak指针和引用计数为value
+* 当有weak指针指向、更改指向对象时，会根据对象的内存地址取出相应的SideTable增加、删除相应的weak指针
+* 当对象回收时，会调用`weak_clear_no_lock`,在全局的weak_table中取出该对象相应的`weak_entry`,然后将里面的weak指针记为nil（所以weak不会引起野指针的问题，因为指向对象的内存块回收时，指针也被置为nil了）
