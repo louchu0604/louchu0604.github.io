@@ -4,9 +4,53 @@
 如果对象用`assign`来修饰，那么出栈后，`assign`修饰的对象所指向的内存块极有可能被回收，如果此时再访问指针，容易出现野指针的情况，app会因访问野指针而闪退。
 那么为什么用`weak`来修饰不会出现这样的后果呢？因为`weak`所修饰的对象被系统回收之后，指针会被置为`nil`
 # weak 源码
+<!-- ### 源码中出现的数据结构
+* `SideTables`
 
+```objc
+static StripedMap<SideTable>& SideTables() {
+    return *reinterpret_cast<StripedMap<SideTable>*>(SideTableBuf);
+}
+```
+* `SideTable`
+```objc
+struct SideTable {
+    spinlock_t slock;
+    RefcountMap refcnts;
+    weak_table_t weak_table;
 
-在分析代码之前，先来看一下源码的注释，理解一下做法。
+    SideTable() {
+        memset(&weak_table, 0, sizeof(weak_table));
+    }
+
+    ~SideTable() {
+        _objc_fatal("Do not delete SideTable.");
+    }
+
+    void lock() { slock.lock(); }
+    void unlock() { slock.unlock(); }
+    void forceReset() { slock.forceReset(); }
+
+    // Address-ordered lock discipline for a pair of side tables.
+
+    template<HaveOld, HaveNew>
+    static void lockTwo(SideTable *lock1, SideTable *lock2);
+    template<HaveOld, HaveNew>
+    static void unlockTwo(SideTable *lock1, SideTable *lock2);
+};
+``` -->
+
+<!-- * `RefcountMap`
+* `weak_table_t` -->
+```objc
+struct weak_table_t {
+    weak_entry_t *weak_entries;
+    size_t    num_entries;
+    uintptr_t mask;
+    uintptr_t max_hash_displacement;
+};
+```
+#### 先来看一下源码的注释，理解一下做法。
 
 ```
 // Update a weak variable.
@@ -18,7 +62,6 @@
 //   deallocating or newObj's class does not support weak references. 
 //   If CrashIfDeallocating is false, nil is stored instead.
 ```
-
 * 这个接口是用来更新weak变量的
 * 如果HaveOld是ture，weak变量已经指向了某个对象，就先清除这个对象，然后指向新的对象，这个对象可能是nil
 * 如果HaveNew是ture 有新的对象来替换，那么要将这个对象存起来。这个新的对象可能是nil
@@ -225,9 +268,11 @@ if (haveOld) {
     return (id)newObj;
 ```
 
+
+
 # 相关细节：
 
-### `weak_unregister_no_lock`:
+### `weak_unregister_no_lock` 移除旧的指针:
 objc-weak.mm line 348
 ```objc
 //weak_table referent_id要指向的对象 *referrer_id指针
@@ -235,15 +280,18 @@ void
 weak_unregister_no_lock(weak_table_t *weak_table, id referent_id, 
                         id *referrer_id)
 {
-    
+    //旧的指针
     objc_object *referent = (objc_object *)referent_id;
+    //指向。。的指针
     objc_object **referrer = (objc_object **)referrer_id;
 
     weak_entry_t *entry;
-
+   //判断
     if (!referent) return;
-
+// 判断weak_table是否存在对该对象的weak_entry
+//weak_entry_for_referent ：返回对象的weak_entry 
     if ((entry = weak_entry_for_referent(weak_table, referent))) {
+        //移除该entry中的指针
         remove_referrer(entry, referrer);
         bool empty = true;
         if (entry->out_of_line()  &&  entry->num_refs != 0) {
@@ -280,7 +328,7 @@ struct weak_table_t {
     uintptr_t max_hash_displacement;
 };
 ```
-### `weak_register_no_lock`:
+### `weak_register_no_lock` 新的指针:
 objc-weak.mm line 391
 ```objc
 id 
@@ -322,10 +370,14 @@ weak_register_no_lock(weak_table_t *weak_table, id referent_id,
 
     // now remember it and where it is being stored
     weak_entry_t *entry;
+    // 判断weak_table是否存在对该对象的weak_entry
     if ((entry = weak_entry_for_referent(weak_table, referent))) {
+        //该entry中新增指针
+
         append_referrer(entry, referrer);
     } 
     else {
+        // 新增该对象的weak_entry
         weak_entry_t new_entry(referent, referrer);
         weak_grow_maybe(weak_table);
         weak_entry_insert(weak_table, &new_entry);
@@ -339,3 +391,65 @@ weak_register_no_lock(weak_table_t *weak_table, id referent_id,
 
 ```
 未完待续
+
+对象释放,引用计数为0时 的调用顺序如下：
+* objc_release
+    * dealloc
+        * _objc_rootDealloc
+            * object_dispose
+                * objc_destructInstance
+                    * objc_clear_deallocating
+                        * clearDeallocating
+                            * clearDeallocating_slow
+                                * weak_clear_no_lock
+
+```objc
+//referent_id 要释放的对象
+void 
+weak_clear_no_lock(weak_table_t *weak_table, id referent_id) 
+{
+    objc_object *referent = (objc_object *)referent_id;
+
+    weak_entry_t *entry = weak_entry_for_referent(weak_table, referent);
+    if (entry == nil) {
+        /// XXX shouldn't happen, but does with mismatched CF/objc
+        //printf("XXX no entry for clear deallocating %p\n", referent);
+        return;
+    }
+
+    // zero out references
+    weak_referrer_t *referrers;
+    size_t count;
+    
+    if (entry->out_of_line()) {
+        referrers = entry->referrers;
+        count = TABLE_SIZE(entry);
+    } 
+    else {
+        referrers = entry->inline_referrers;
+        count = WEAK_INLINE_COUNT;
+    }
+    
+    for (size_t i = 0; i < count; ++i) {
+        objc_object **referrer = referrers[i];
+        if (referrer) {
+            if (*referrer == referent) {
+                *referrer = nil;
+            }
+            else if (*referrer) {
+                _objc_inform("__weak variable at %p holds %p instead of %p. "
+                             "This is probably incorrect use of "
+                             "objc_storeWeak() and objc_loadWeak(). "
+                             "Break on objc_weak_error to debug.\n", 
+                             referrer, (void*)*referrer, (void*)referent);
+                objc_weak_error();
+            }
+        }
+    }
+    
+    weak_entry_remove(weak_table, entry);
+}
+```
+
+
+对象赋值给weak对象时 流程示意
