@@ -458,3 +458,4 @@ weak_clear_no_lock(weak_table_t *weak_table, id referent_id)
 * SideTables是一个全局的Hash表，里面存放了对象的weak指针和引用计数。里面装的是SideTable。对象的内存地址为key ，weak指针和引用计数为value
 * 当有weak指针指向、更改指向对象时，会根据对象的内存地址取出相应的SideTable增加、删除相应的weak指针
 * 当对象回收时，会调用`weak_clear_no_lock`,在全局的weak_table中取出该对象相应的`weak_entry`,然后将里面的weak指针记为nil（所以weak不会引起野指针的问题，因为指向对象的内存块回收时，指针也被置为nil了）
+x
