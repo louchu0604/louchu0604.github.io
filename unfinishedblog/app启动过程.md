@@ -51,6 +51,13 @@ uintptr_t start(const struct macho_header* appsMachHeader, int argc, const char*
 	return dyld::_main(appsMachHeader, appsSlide, argc, argv, envp, apple, startGlue);
 }
 ```
+
+接下来是`_main`
+这个函数有点长，要耐心看 
+前两个入参是
+`mainExecutableMH(macho_header)` 头部信息和 `mainExecutableSlide(uintptr_t)`偏移量
+
+
 动态链接库包括： 
 iOS 中用到的所有系统 framework 
 加载OC runtime方法的libobjc， 
@@ -65,4 +72,3 @@ iOS 中用到的所有系统 framework
 5.initializers
 
 
-整个事件由 dyld 主导，完成运行环境的初始化后，配合 ImageLoader 将二进制文件按格式加载到内存， 动态链接依赖库，并由 runtime 负责加载成 objc 定义的结构，所有初始化工作结束后，dyld 调用真正的 main 函数。
