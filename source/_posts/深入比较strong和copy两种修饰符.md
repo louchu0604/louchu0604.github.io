@@ -1,3 +1,8 @@
+---
+title: 深入比较strong和copy两种修饰符
+date: 2018-11-26 00:48:10
+tags:
+---
 strong和copy是property的两个基本修饰符，在oc中，一般情况下用来修饰对象。
 strong：property的默认修饰符。
 copy：一般用来修饰拥有可变类型的对象。比如NSString NSDictionary NSArray.
