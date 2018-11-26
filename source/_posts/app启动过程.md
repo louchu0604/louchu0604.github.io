@@ -1,3 +1,18 @@
+---
+title: app启动过程
+date: 2018-11-26 00:50:28
+tags:
+---
+
+看了源码
+是题纲也是总结
+
+
+
+
+后面的都是草稿，，别看了。。
+
+
 main()调用之前的加载过程
 * 先将可执行文件加载，
 * 加载dyld
@@ -95,7 +110,9 @@ _main(const macho_header* mainExecutableMH, uintptr_t mainExecutableSlide,
 		else 
 			++shortProgName;
 	}
+	//拼接路径
 	mysprintf(bindingsLogPath, "/tmp/bindings/%d-%s", getpid(), shortProgName);
+	// 读取
 	sBindingsLogfile = open(bindingsLogPath, O_WRONLY | O_CREAT, 0666);
 	if ( sBindingsLogfile == -1 ) {
 		::mkdir("/tmp/bindings", 0777);
@@ -127,6 +144,7 @@ _main(const macho_header* mainExecutableMH, uintptr_t mainExecutableSlide,
 		}
 	}
 	// Remember short name of process for later logging
+	//为之后的日志输出记录
 	sExecShortName = ::strrchr(sExecPath, '/');
 	if ( sExecShortName != NULL )
 		++sExecShortName;
@@ -170,10 +188,13 @@ _main(const macho_header* mainExecutableMH, uintptr_t mainExecutableSlide,
 
 	try {
 		// add dyld itself to UUID list
+		// 将dyldimage加入uuidlist
 		addDyldImageToUUIDList();
 		CRSetCrashLogMessage(sLoadingCrashMessage);
 		// instantiate ImageLoader for main executable
+		//初始化instantiateFromLoadedImage 
 		sMainExecutable = instantiateFromLoadedImage(mainExecutableMH, mainExecutableSlide, sExecPath);
+		// 配置上下文信息
 		gLinkContext.mainExecutable = sMainExecutable;
 		gLinkContext.processIsRestricted = sProcessIsRestricted;
 		gLinkContext.processRequiresLibraryValidation = sProcessRequiresLibraryValidation;
@@ -234,7 +255,9 @@ _main(const macho_header* mainExecutableMH, uintptr_t mainExecutableSlide,
 		// link any inserted libraries
 		// do this after linking main executable so that any dylibs pulled in by inserted 
 		// dylibs (e.g. libSystem) will not be in front of dylibs the program uses
+		
 		if ( sInsertedDylibCount > 0 ) {
+			//链接  细节见下方
 			for(unsigned int i=0; i < sInsertedDylibCount; ++i) {
 				ImageLoader* image = sAllImages[i+1];
 				link(image, sEnv.DYLD_BIND_AT_LAUNCH, true, ImageLoader::RPathChain(NULL, NULL));
@@ -242,6 +265,7 @@ _main(const macho_header* mainExecutableMH, uintptr_t mainExecutableSlide,
 			}
 			// only INSERTED libraries can interpose
 			// register interposing info after all inserted libraries are bound so chaining works
+			// interposing info 这个是什么意思
 			for(unsigned int i=0; i < sInsertedDylibCount; ++i) {
 				ImageLoader* image = sAllImages[i+1];
 				image->registerInterposing();
@@ -266,6 +290,8 @@ _main(const macho_header* mainExecutableMH, uintptr_t mainExecutableSlide,
 		sMainExecutable->weakBind(gLinkContext);
 		
 		CRSetCrashLogMessage("dyld: launch, running initializers");
+
+		//调用所有的image的initializer方法
 	#if SUPPORT_OLD_CRT_INITIALIZATION
 		// Old way is to run initializers via a callback from crt1.o
 		if ( ! gRunInitializersOldWay ) 
@@ -300,11 +326,98 @@ _main(const macho_header* mainExecutableMH, uintptr_t mainExecutableSlide,
 	CRSetCrashLogMessage(NULL);
 	
 	return result;
-}`
+}
+```
+
+`addDyldImageToUUIDList`细节
 
 
+```objc
 
+static void addDyldImageToUUIDList()
+{
+	const struct macho_header* mh = (macho_header*)&__dso_handle;
+	const uint32_t cmd_count = mh->ncmds;
+	const struct load_command* const cmds = (struct load_command*)((char*)mh + sizeof(macho_header));
+	const struct load_command* cmd = cmds;
+	for (uint32_t i = 0; i < cmd_count; ++i) {
+		switch (cmd->cmd) {
+			case LC_UUID: {
+				uuid_command* uc = (uuid_command*)cmd;
+				dyld_uuid_info info;
+				info.imageLoadAddress = (mach_header*)mh;
+				memcpy(info.imageUUID, uc->uuid, 16);
+				addNonSharedCacheImageUUID(info);
+				return;
+			}
+		}
+		cmd = (const struct load_command*)(((char*)cmd)+cmd->cmdsize);
+	}
+}
 
+```
+`ImageLoader::link`细节  也就是题纲说的`link`的细节
+```objc
+void ImageLoader::link(const LinkContext& context, bool forceLazysBound, bool preflightOnly, bool neverUnload, const RPathChain& loaderRPaths)
+{
+	//dyld::log("ImageLoader::link(%s) refCount=%d, neverUnload=%d\n", this->getPath(), fDlopenReferenceCount, fNeverUnload);
+	
+	// clear error strings
+	(*context.setErrorStrings)(dyld_error_kind_none, NULL, NULL, NULL);
+
+	uint64_t t0 = mach_absolute_time();
+	//递归加载所有的library
+	this->recursiveLoadLibraries(context, preflightOnly, loaderRPaths);
+	context.notifyBatch(dyld_image_state_dependents_mapped);
+	
+	// we only do the loading step for preflights
+	if ( preflightOnly )
+		return;
+		
+	uint64_t t1 = mach_absolute_time();
+	context.clearAllDepths();
+	this->recursiveUpdateDepth(context.imageCount());
+
+	uint64_t t2 = mach_absolute_time();
+	//递归修复地址
+ 	this->recursiveRebase(context);
+	context.notifyBatch(dyld_image_state_rebased);
+	//递归绑定
+	uint64_t t3 = mach_absolute_time();
+ 	this->recursiveBind(context, forceLazysBound, neverUnload);
+
+	uint64_t t4 = mach_absolute_time();
+	if ( !context.linkingMainExecutable )
+		this->weakBind(context);
+	uint64_t t5 = mach_absolute_time();	
+
+	context.notifyBatch(dyld_image_state_bound);
+	uint64_t t6 = mach_absolute_time();	
+
+	std::vector<DOFInfo> dofs;
+	this->recursiveGetDOFSections(context, dofs);
+	context.registerDOFs(dofs);
+	uint64_t t7 = mach_absolute_time();	
+
+	// interpose any dynamically loaded images
+	if ( !context.linkingMainExecutable && (fgInterposingTuples.size() != 0) ) {
+		this->recursiveApplyInterposing(context);
+	}
+	
+	// clear error strings
+	(*context.setErrorStrings)(dyld_error_kind_none, NULL, NULL, NULL);
+
+	fgTotalLoadLibrariesTime += t1 - t0;
+	fgTotalRebaseTime += t3 - t2;
+	fgTotalBindTime += t4 - t3;
+	fgTotalWeakBindTime += t5 - t4;
+	fgTotalDOF += t7 - t6;
+	
+	// done with initial dylib loads
+	fgNextPIEDylibAddress = 0;
+}
+
+```
 动态链接库包括： 
 iOS 中用到的所有系统 framework 
 加载OC runtime方法的libobjc， 

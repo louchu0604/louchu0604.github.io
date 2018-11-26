@@ -1,3 +1,8 @@
+---
+title: weak
+date: 2018-11-26 00:52:05
+tags:
+---
 背景：
 一般情况下，`weak`修饰对象，`assign`修饰基本数据类型。
 首先，`weak`和`assign`，并不会增加对象的rc
