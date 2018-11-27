@@ -4,11 +4,98 @@ date: 2018-11-26 00:50:28
 tags:
 ---
 
-看了源码
-是题纲也是总结
+
+最开始的时候呢，是看了sunny的博客：http://blog.sunnyxx.com/2014/08/30/objc-pre-main/
+和mike ash的博客：
+https://www.mikeash.com/pyblog/friday-qa-2012-11-09-dyld-dynamic-linking-on-os-x.html
+但是没看过源码一头雾水的，所以花了周末的时间，看了源码。
+下面的是我的一些总结，也算是题纲。然后我的草稿也继续保留。
+刚开始写博客，希望思路会越来越好。
+引自sunny的博客
+>dyld（the dynamic link editor），Apple 的动态链接器，系统 kernel 做好启动程序的初始准备后，交给 dyld 负责，援引并翻译《 Mike Ash 这篇 blog 》对 dyld 作用顺序的概括：
+1. 从 kernel 留下的原始调用栈引导和启动自己
+2. 将程序依赖的动态链接库递归加载进内存，当然这里有缓存机制
+3. non-lazy 符号立即 link 到可执行文件，lazy 的存表里
+4. Runs static initializers for the executable
+5. 找到可执行文件的 main 函数，准备参数并调用
+6. 程序执行中负责绑定 lazy 符号、提供 runtime dynamic loading services、提供调试器接口
+7. 程序main函数 return 后执行 static terminator
+8. 某些场景下 main 函数结束后调 libSystem 的 _exit 函数
+
+### `Mach-O文件`
+Mach-O文件格式是OSX和iOS系统上的可执行文件格式，【.O文件、动态库都是这个格式】
+结构如下:
+`mach_header`
 
 
+# app 编译打包的过程
+这个地方贴一下计算机原理的示意图
+# app 启动的过程
 
+dyld 
+iOS中系统级别的framework都是动态链接的。原因有三，一是为了减少体积，编译的时候不需要打包进去。二是代码可以共用，因为系统下的APP用到的同一个framework都是一样的。  三是便于更新。
+静态链接的的framework比如我们常用到的第三方库SVProgressHUD是在编译时链接好的。
+iOS不允许我们用到系统以外的动态链接库。原因，emmm,everybody knows
+
+源码里的汇编太难啃 ，揪出 `__dyld_start` ,调用栈如下
+* `__dyld_start`
+    * `dyldbootstrap::start`
+        * `_main`
+`__dyld_start`
+```objc
+__dyld_start:
+	mov 	x28, sp
+	and     sp, x28, #~15		// force 16-byte alignment of stack
+	mov	x0, #0
+	mov	x1, #0
+	stp	x1, x0, [sp, #-16]!	// make aligned terminating frame
+	mov	fp, sp			// set up fp to point to terminating frame
+	sub	sp, sp, #16             // make room for local variables
+	ldr     x0, [x28]		// get app's mh into x0
+ 	ldr     x1, [x28, #8]           // get argc into x1 (kernel passes 32-bit int argc as 64-bits on stack to keep alignment)
+	add     x2, x28, #16		// get argv into x2
+	adrp	x4,___dso_handle@page
+	add 	x4,x4,___dso_handle@pageoff // get dyld's mh in to x4
+	adrp	x3,__dso_static@page
+	ldr 	x3,[x3,__dso_static@pageoff] // get unslid start of dyld
+	sub 	x3,x4,x3		// x3 now has slide of dyld
+	mov	x5,sp                   // x5 has &startGlue
+	
+	// call dyldbootstrap::start(app_mh, argc, argv, slide, dyld_mh, &startGlue)
+	bl	__ZN13dyldbootstrap5startEPK12macho_headeriPPKclS2_Pm
+	mov	x16,x0                  // save entry point address in x16
+	ldr     x1, [sp]
+	cmp	x1, #0
+	b.ne	Lnew
+
+	// LC_UNIXTHREAD way, clean up stack and jump to result
+	add	sp, x28, #8		// restore unaligned stack pointer without app mh
+	br	x16			// jump to the program's entry point
+
+```
+`dyldbootstrap::start`做的主要事情是初始化参数，并调用main，返回mian函数的地址
+`main`函数：
+```objc
+......
+return dyld::_main(appsMachHeader, appsSlide, argc, argv, envp, apple, startGlue);
+......
+uintptr_t
+_main(const macho_header* mainExecutableMH, uintptr_t mainExecutableSlide, 
+		int argc, const char* argv[], const char* envp[], const char* apple[], 
+		uintptr_t* startGlue)
+
+```
+参数：
+`mainExecutableMH`:当前app的Mach-O头部信息。 `macho_header`结构体的结构可以在源码中查看
+【源码中：
+* The 64-bit mach header appears at the very beginning of object files for 64-bit architectures.
+* The 32-bit mach header appears at the very beginning of the object file for 32-bit architectures.】
+`mainExecutableSlide`:地址的偏移量
+`argc`:
+`argv[]`:
+`envp[]`:
+`apple[]`:
+`startGlue`:
 
 后面的都是草稿，，别看了。。
 
