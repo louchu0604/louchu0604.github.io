@@ -521,5 +521,3 @@ iOS 中用到的所有系统 framework
 3.Bind image 
 4.Objc setup 
 5.initializers
-
-

@@ -3,13 +3,20 @@ title: weak
 date: 2018-11-26 00:52:05
 tags:
 ---
-背景：
+# why 
 一般情况下，`weak`修饰对象，`assign`修饰基本数据类型。
-首先，`weak`和`assign`，并不会增加对象的rc
-如果对象用`assign`来修饰，那么出栈后，`assign`修饰的对象所指向的内存块极有可能被回收，如果此时再访问指针，容易出现野指针的情况，app会因访问野指针而闪退。
-那么为什么用`weak`来修饰不会出现这样的后果呢？因为`weak`所修饰的对象被系统回收之后，指针会被置为`nil`
+* `weak`和`assign`，并不会增加对象的rc
+* `assign`修饰的对象，出栈后，对象所指向的内存块极有可能被回收，如果此时再访问指针，会出现野指针的情况
+* `weak`修饰的对象，因为`weak`所修饰的对象被系统回收之后，指针会被置为`nil`，不会出现也指针
+
+
+#### 下面会从源码中一探究竟。（源码的版本是objc4-723）
+
 # weak 源码
-<!-- ### 源码中出现的数据结构
+
+
+
+## 源码中出现的数据结构
 * `SideTables`
 
 ```objc
@@ -43,10 +50,11 @@ struct SideTable {
     template<HaveOld, HaveNew>
     static void unlockTwo(SideTable *lock1, SideTable *lock2);
 };
-``` -->
+```
 
-<!-- * `RefcountMap`
-* `weak_table_t` -->
+* `RefcountMap` :引用计数表
+* `weak_table_t`:
+
 ```objc
 struct weak_table_t {
     weak_entry_t *weak_entries;
@@ -463,4 +471,3 @@ weak_clear_no_lock(weak_table_t *weak_table, id referent_id)
 * SideTables是一个全局的Hash表，里面存放了对象的weak指针和引用计数。里面装的是SideTable。对象的内存地址为key ，weak指针和引用计数为value
 * 当有weak指针指向、更改指向对象时，会根据对象的内存地址取出相应的SideTable增加、删除相应的weak指针
 * 当对象回收时，会调用`weak_clear_no_lock`,在全局的weak_table中取出该对象相应的`weak_entry`,然后将里面的weak指针记为nil（所以weak不会引起野指针的问题，因为指向对象的内存块回收时，指针也被置为nil了）
-x
