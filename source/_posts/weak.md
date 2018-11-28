@@ -25,6 +25,7 @@ static StripedMap<SideTable>& SideTables() {
 }
 ```
 * `SideTable`
+
 ```objc
 struct SideTable {
     spinlock_t slock;
