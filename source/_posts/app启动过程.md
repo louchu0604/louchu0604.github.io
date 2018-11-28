@@ -41,8 +41,11 @@ iOS不允许我们用到系统以外的动态链接库。原因，emmm,everybody
 * `__dyld_start`
     * `dyldbootstrap::start`
         * `_main`
+
+
 `__dyld_start`
-```objc
+
+```
 __dyld_start:
 	mov 	x28, sp
 	and     sp, x28, #~15		// force 16-byte alignment of stack
@@ -90,6 +93,7 @@ _main(const macho_header* mainExecutableMH, uintptr_t mainExecutableSlide,
 【源码中：
 * The 64-bit mach header appears at the very beginning of object files for 64-bit architectures.
 * The 32-bit mach header appears at the very beginning of the object file for 32-bit architectures.】
+
 `mainExecutableSlide`:地址的偏移量
 `argc`:
 `argv[]`:
