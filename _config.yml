@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Cy's blog
+title: 🐨's note
 subtitle: fix it 
 description:
 author: Chu Lou
@@ -12,7 +12,7 @@ timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://dearcy.me
+url: http://blog.kaolagogogo.fun
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -72,5 +72,8 @@ theme: maupassant
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: git@github.com:louchu0604/louchu0604.github.io.git
-  branch: master
+##  repository: git@github.com:louchu0604/louchu0604.github.io.git
+##  branch: master
+  repo:
+    github: git@git.dev.tencent.com:kaolagogogo/kaolagogogo.coding.me.git,master
+    coding: git@github.com:louchu0604/louchu0604.github.io.git,master
