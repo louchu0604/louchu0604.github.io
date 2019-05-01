@@ -1,1 +1,1126 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>KAOLA's note | fix it</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">KAOLA's note</h1><a id="logo" href="/.">KAOLA's note</a><p class="description">fix it</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h2 class="post-title"><a href="/2019/04/28/锁/">锁</a></h2><div class="post-meta">2019-04-28</div><a data-disqus-identifier="2019/04/28/锁/" href="/2019/04/28/锁/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><ol></ol></div><p class="readmore"><a href="/2019/04/28/锁/">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2018/11/26/weak/">weak</a></h2><div class="post-meta">2018-11-26</div><a data-disqus-identifier="2018/11/26/weak/" href="/2018/11/26/weak/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><h1 id="why"><a href="#why" class="headerlink" title="why"></a>why</h1><p>一般情况下，<code>weak</code>修饰对象，<code>assign</code>修饰基本数据类型。</p></div><p class="readmore"><a href="/2018/11/26/weak/">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2018/11/26/iOS事件响应链/">iOS事件响应链</a></h2><div class="post-meta">2018-11-26</div><a data-disqus-identifier="2018/11/26/iOS事件响应链/" href="/2018/11/26/iOS事件响应链/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>触摸事件的响应机制：</p></div><p class="readmore"><a href="/2018/11/26/iOS事件响应链/">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2018/11/26/catogory的几个问题/">关于catogory的几个问题</a></h2><div class="post-meta">2018-11-26</div><a data-disqus-identifier="2018/11/26/catogory的几个问题/" href="/2018/11/26/catogory的几个问题/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>先介绍分类：<br>分类可以为已经存在的类添加方法，还可以把类的实现分在几个不同的文件里。<br>Q1：<br>下面这段话摘自美团点评的文章：</p></div><p class="readmore"><a href="/2018/11/26/catogory的几个问题/">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2018/11/26/app启动过程/">app启动过程</a></h2><div class="post-meta">2018-11-26</div><a data-disqus-identifier="2018/11/26/app启动过程/" href="/2018/11/26/app启动过程/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>最开始的时候呢，是看了sunny的博客：<a href="http://blog.sunnyxx.com/2014/08/30/objc-pre-main/" target="_blank" rel="noopener">http://blog.sunnyxx.com/2014/08/30/objc-pre-main/</a><br>和mike ash的博客：<br><a href="https://www.mikeash.com/pyblog/friday-qa-2012-11-09-dyld-dynamic-linking-on-os-x.html" target="_blank" rel="noopener">https://www.mikeash.com/pyblog/friday-qa-2012-11-09-dyld-dynamic-linking-on-os-x.html</a><br>但是没看过源码一头雾水的，所以花了周末的时间，看了源码。<br>下面的是我的一些总结，也算是题纲。然后我的草稿也继续保留。<br>刚开始写博客，希望思路会越来越好。<br>引自sunny的博客</p></div><p class="readmore"><a href="/2018/11/26/app启动过程/">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2018/11/26/做用户轨迹追踪时的思考/">做用户轨迹追踪时的思考</a></h2><div class="post-meta">2018-11-26</div><a data-disqus-identifier="2018/11/26/做用户轨迹追踪时的思考/" href="/2018/11/26/做用户轨迹追踪时的思考/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>确切地说是目前采用的方案。</p></div><p class="readmore"><a href="/2018/11/26/做用户轨迹追踪时的思考/">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2018/11/26/自动释放池的原理/">自动释放池的原理</a></h2><div class="post-meta">2018-11-26</div><a data-disqus-identifier="2018/11/26/自动释放池的原理/" href="/2018/11/26/自动释放池的原理/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>背景:<br>前文提到了<code>weak</code>修饰对象原理。对于iOS如何管理内存的释放销毁，还需要知道自动释放池技术，故本文会在源码的基础上讨论。</p></div><p class="readmore"><a href="/2018/11/26/自动释放池的原理/">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2018/11/26/消息转发/">消息转发</a></h2><div class="post-meta">2018-11-26</div><a data-disqus-identifier="2018/11/26/消息转发/" href="/2018/11/26/消息转发/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><h1 id="background"><a href="#background" class="headerlink" title="background"></a>background</h1><h1 id="why"><a href="#why" class="headerlink" title="why"></a>why</h1><h1 id="what"><a href="#what" class="headerlink" title="what"></a>what</h1><ul></ul></div><p class="readmore"><a href="/2018/11/26/消息转发/">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2018/11/26/深入比较strong和copy两种修饰符/">深入比较strong和copy两种修饰符</a></h2><div class="post-meta">2018-11-26</div><a data-disqus-identifier="2018/11/26/深入比较strong和copy两种修饰符/" href="/2018/11/26/深入比较strong和copy两种修饰符/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>strong和copy是property的两个基本修饰符，在oc中，一般情况下用来修饰对象。<br>strong：property的默认修饰符。<br>copy：一般用来修饰拥有可变类型的对象。比如NSString NSDictionary NSArray.<br>在学习oc的过程中，大多数的资料里都提到了以上两点，却没有详细说明这么做的原因。<br>本文旨在oc底层实现的基础上探讨以上两点的原因和合理性。</p></div><p class="readmore"><a href="/2018/11/26/深入比较strong和copy两种修饰符/">阅读更多</a></p></div><div class="post"><h2 class="post-title"><a href="/2018/11/26/设计一个合理的蓝牙框架/">设计一个合理的蓝牙框架</a></h2><div class="post-meta">2018-11-26</div><a data-disqus-identifier="2018/11/26/设计一个合理的蓝牙框架/" href="/2018/11/26/设计一个合理的蓝牙框架/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>蓝牙：<br>为方便接入特定协议下的设备，有必要对硬件设备进行抽象，将蓝牙通讯的过程、逻辑封装成Framework。<br>调用者不要花时间分析芯片的协议、特性，只需要拿到Framework，调用API即可。<br>基于以上前提，这个框架需要具备以下条件：</p></div><p class="readmore"><a href="/2018/11/26/设计一个合理的蓝牙框架/">阅读更多</a></p></div><nav class="page-navigator"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页</a></nav><script id="dsq-count-scr" src="//louchu0604.disqus.com/count.js" async></script></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="http://blog.kaolagogogo.fun"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/04/28/锁/">锁</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/weak/">weak</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/iOS事件响应链/">iOS事件响应链</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/catogory的几个问题/">关于catogory的几个问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/app启动过程/">app启动过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/做用户轨迹追踪时的思考/">做用户轨迹追踪时的思考</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/自动释放池的原理/">自动释放池的原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/消息转发/">消息转发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/深入比较strong和copy两种修饰符/">深入比较strong和copy两种修饰符</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/设计一个合理的蓝牙框架/">设计一个合理的蓝牙框架</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//louchu0604.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://git.oschina.net/Chu_Lou" title="Git地址" target="_blank">Git地址</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">KAOLA's note.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="Chu Lou">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Chu Lou">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content>
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>KAOLA&#39;s note</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href="/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href="/assets/favicon.ico">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/scripts/main.js" as="script">
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="home-body">
+    
+    
+<header class="header index-header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <a class="home-link" href="/">KAOLA's note.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 文章页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            KAOLA's note.
+            <!-- 文章页  -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+                fix it.
+            
+            <!-- 文章页  -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main index-page">
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2019/04/28/锁/">
+            
+                <span>锁</span>
+        </a>
+        <div class="abstract-content">
+            
+自旋锁(spinlock) do while 、忙等、（理解成死循环等锁 因此不适合较长时间的任务，等待的过程非常耗CPU）
+互斥锁(mutexlock) 休眠状态等锁
+读写锁(rwlock)：处于“写锁”时任何操作都要休眠等锁
+递归锁(recursivelock)：是互斥锁的一个特例 允许同一个线程在未释放拥有的锁时反复对该锁进行加锁操作
+死锁 一个资源被多次调用，而多次调用方都未能释放该资源就会造成一种互相等待的现象，若无外力作用，它们都将无法推进下去。此时称系统处于死 锁状态或系统产生了死锁。
+
+
+@synchronized 关键字加锁 用法简洁、可读性强：传入对象即可，没有显示...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/28</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2018/11/26/weak/">
+            
+                <span>weak</span>
+        </a>
+        <div class="abstract-content">
+            why一般情况下，weak修饰对象，assign修饰基本数据类型。
+
+weak和assign，并不会增加对象的rc
+assign修饰的对象，出栈后，对象所指向的内存块极有可能被回收，如果此时再访问指针，会出现野指针的情况
+weak修饰的对象，因为weak所修饰的对象被系统回收之后，指针会被置为nil，不会出现也指针
+
+下面会从源码中一探究竟。（源码的版本是objc4-723）weak 源码源码中出现的数据结构
+SideTables
+
+123static StripedMap&lt;SideTable&gt;&amp; SideTables() &#123;    return *rei...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2018/11/26/iOS事件响应链/">
+            
+                <span>iOS事件响应链</span>
+        </a>
+        <div class="abstract-content">
+            触摸事件的响应机制：
+
+系统检测到触摸等事件后，会将事件打包成UIEvent对象发给当前活动的APP的事件队列。
+UIApplication会从事件队列中取出事件并传递给UIWindow
+UIWindow会使用hitTest:withEvent:方法寻找此次Touch操作初始点所在的视图(View) 
+hitTest:withEvent:会在当前视图上调用pointInside:withEvent:方法判断触摸点是否在当前视图内。若返回NO则hitTest:withEvent:返回nil，若返回YES则向当前视图的所有subviews发送hitTest:withEvent:直到有子视图...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2018/11/26/catogory的几个问题/">
+            
+                <span>关于catogory的几个问题</span>
+        </a>
+        <div class="abstract-content">
+            先介绍分类：分类可以为已经存在的类添加方法，还可以把类的实现分在几个不同的文件里。Q1：下面这段话摘自美团点评的文章：
+
+
+
+category是无法添加实例变量的（因为在运行期，对象的内存布局已经确定，如果添加实例变量就会破坏类的内部布局，这对编译型语言来说是灾难性的）我们可以在objc的源码中看到category的结构，如下：12345678typedef struct category_t &#123;    const char *name;// 类名    classref_t cls;// 要扩展的类对象    struct method_list_t *instanceMet...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2018/11/26/app启动过程/">
+            
+                <span>app启动过程</span>
+        </a>
+        <div class="abstract-content">
+            最开始的时候呢，是看了sunny的博客：http://blog.sunnyxx.com/2014/08/30/objc-pre-main/和mike ash的博客：https://www.mikeash.com/pyblog/friday-qa-2012-11-09-dyld-dynamic-linking-on-os-x.html但是没看过源码一头雾水的，所以花了周末的时间，看了源码。下面的是我的一些总结，也算是题纲。然后我的草稿也继续保留。刚开始写博客，希望思路会越来越好。引自sunny的博客
+
+dyld（the dynamic link editor），Apple 的动态链接器，系...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2018/11/26/做用户轨迹追踪时的思考/">
+            
+                <span>做用户轨迹追踪时的思考</span>
+        </a>
+        <div class="abstract-content">
+            确切地说是目前采用的方案。
+why
+快速定位用户反馈的问题
+运营可自定义追踪行为，方便研究
+为产品定位做更多的参考
+
+what
+追踪代码和业务代码分离
+抽离出来作为其他项目的Kit使用
+根据后台动态下发的文件追踪相应的页面、事件,并根据设置确定日志上传时机
+
+how1. 追踪页面轨迹   主要借助nav的api 
+   记下push\popset\present\dismiss的日志   对于每个一vc用地址、className来标记，前者用来标记vc数组，后者用来匹配路径
+对于有tab的app，记录下当前的tab页很重要。我采用的方法是，hook住funname、funname记录下t...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2018/11/26/自动释放池的原理/">
+            
+                <span>自动释放池的原理</span>
+        </a>
+        <div class="abstract-content">
+            背景:前文提到了weak修饰对象原理。对于iOS如何管理内存的释放销毁，还需要知道自动释放池技术，故本文会在源码的基础上讨论。
+autoreleasepool先总结：
+
+ARC下，非alloc/new/copy/mutableCopy开头的类方法默认返回的是autoreleased对象，编译器会自动插入相关的autorelease语句
+主线程的runloop进入时（entry），其回调内会调用 _objc_autoreleasePoolPush() 创建自动释放池。
+准备进入休眠(BeforeWaiting) 时调用_objc_autoreleasePoolPop() 和 _objc_a...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2018/11/26/消息转发/">
+            
+                <span>消息转发</span>
+        </a>
+        <div class="abstract-content">
+            backgroundwhywhat
+ps 总是会看到各种博文里提到runtime我觉得runtime 有两个角度可以解释
+一套用c实现的底层API 源码可以在apple的source library里下载
+一种动态运行机制
+
+在iOS中，程序运行时调用的方法【or 消息】并不是编译时期就确定下来的，可以在运行时才确定、甚至是修改。消息转发的机制，也是因为有runtime，才能如此设计。
+
+疑问：forwardingTarget和forwardInvocation在本来找不到对应的方法时，可以将消息转发给可以其他对象，那他们的区别是什么？
+
+
+how在源码里找了一下对应的实现forward...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2018/11/26/深入比较strong和copy两种修饰符/">
+            
+                <span>深入比较strong和copy两种修饰符</span>
+        </a>
+        <div class="abstract-content">
+            strong和copy是property的两个基本修饰符，在oc中，一般情况下用来修饰对象。strong：property的默认修饰符。copy：一般用来修饰拥有可变类型的对象。比如NSString NSDictionary NSArray.在学习oc的过程中，大多数的资料里都提到了以上两点，却没有详细说明这么做的原因。本文旨在oc底层实现的基础上探讨以上两点的原因和合理性。
+一、strong和copy的不同、以及为什么NSString等对象一般用copy来修饰？对象使用strong和copy修饰后，都可以让对象的RC＋1。其不同点可以看一下代码。123456789101112@pro...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2018/11/26/设计一个合理的蓝牙框架/">
+            
+                <span>设计一个合理的蓝牙框架</span>
+        </a>
+        <div class="abstract-content">
+            蓝牙：为方便接入特定协议下的设备，有必要对硬件设备进行抽象，将蓝牙通讯的过程、逻辑封装成Framework。调用者不要花时间分析芯片的协议、特性，只需要拿到Framework，调用API即可。基于以上前提，这个框架需要具备以下条件：
+
+指令响应及时、不需要调用者进行各种判断（比如设备是否断开、设备是都需要重连、指令是否需要重发、指令发送超时）
+能直接将数据封装好给调用者使用。
+指令有优先级。调用者可以设定指令优先级。（如调用者将“升级指令”设为最优，则处理完此次指令之前，其他指令都在等待序列）
+
+由于底层会将数据分成以20bytes为单位进行读取。所以客户端要对收到的数据包进行合包。合包...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    <!-- paginator  -->
+    
+    <nav class="page-nav">
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">NEXT &#62;</a>
+    </nav>
+    
+</main>
+            <!-- profile -->
+            
+            <div class="profile">
+    <img class="profile-avatar" alt="avatar" src="/avatar/Misaka.jpg">
+    <div class="profile-name">kaola</div>
+    
+    <div class="profile-signature">
+        fix it
+    </div>
+    
+    
+    <div class="profile-social">
+        
+    
+        
+            
+                <a href="mailto:louchu0604@gmail.com" class="iconfont-archer email" title="email"></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/louchu0604" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    
+        <div class="friends">
+            <div>FRIENDS</div>
+            
+                
+                    <span>
+                        <a href="//www.baidu.com" target="_black">friendA</a>
+                    </span>
+                
+            
+                
+                    <span>
+                        <a href="//www.google.com" target="_black">friendB</a>
+                    </span>
+                
+            
+                
+            
+        </div>
+    
+    
+        <div class="about-me">
+            <a href="/about">ABOUT ME</a>
+        </div>
+    
+</div>
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:louchu0604@gmail.com" class="iconfont-archer email" title="email"></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/louchu0604" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 11
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href="/2019/04/28/锁/">锁</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/深入比较strong和copy两种修饰符/">深入比较strong和copy两种修饰符</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/app启动过程/">app启动过程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/iOS事件响应链/">iOS事件响应链</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/做用户轨迹追踪时的思考/">做用户轨迹追踪时的思考</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/自动释放池的原理/">自动释放池的原理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/weak/">weak</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/设计一个合理的蓝牙框架/">设计一个合理的蓝牙框架</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/catogory的几个问题/">关于catogory的几个问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/几种变量类型/">几种变量类型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/消息转发/">消息转发</a>
+        </li>
+    
+    </ul></div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br>
+    1、请确保node版本大于6.2<br>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "Chu Lou"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+     
+    </body>
+</html>
+
+
