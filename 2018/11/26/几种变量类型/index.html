@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>几种变量类型 | KAOLA's note</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">几种变量类型</h1><a id="logo" href="/.">KAOLA's note</a><p class="description">fix it</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">几种变量类型</h1><div class="post-meta">Nov 26, 2018<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><a data-disqus-identifier="2018/11/26/几种变量类型/" href="/2018/11/26/几种变量类型/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><ol>
+<li>全局变量：</li>
+</ol>
+<ul>
+<li>要在函数外面声明</li>
+<li>可以跨文件访问</li>
+<li>声明时可以赋值 默认初始值为0</li>
+<li>储存在【全局（静态）存储区static】</li>
+<li><code>extern</code> 关键字</li>
+<li><code>extern varName</code>代表的是<code>varName</code>是调用外部声明的变量</li>
+</ul>
+<ol start="2">
+<li>静态变量 </li>
+</ol>
+<ul>
+<li>可以在函数外部声明、亦可在函数外部声明</li>
+<li>仅在声明文件内访问</li>
+<li>声明时关键字为<code>static</code></li>
+<li>声明时可以赋值 默认初始值为0</li>
+<li>储存在【全局（静态）存储区static】</li>
+</ul>
+<ol start="3">
+<li>局部变量</li>
+</ol>
+<ul>
+<li>要在函数内部声明</li>
+<li>运行到该函数时才会分配内存</li>
+<li>只在声明变量的函数内部访问</li>
+<li>一般数据类型储存在栈帧中，new init开头的方法初始化的对象储存在堆上。</li>
+</ul>
+<ol start="4">
+<li>内存分区<ol>
+<li>栈区：</li>
+<li>堆区：</li>
+<li>全局区：</li>
+<li>文字常量区</li>
+<li>程序代码区</li>
+</ol>
+</li>
+</ol>
+<p>题外话</p>
+<p>结合看过的博客，自己在实践的过程当中发现，<code>NSString</code> 比较特殊，并不完全如其他对象，是分配在堆区的。</p>
+<h1 id="why"><a href="#why" class="headerlink" title="why"></a>why</h1></div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://blog.kaolagogogo.fun/2018/11/26/几种变量类型/" data-id="cjv52olr70005mjxlq5x6m924" class="article-share-link">分享到</a><div class="tags"></div><div class="post-nav"><a href="/2018/11/26/设计一个合理的蓝牙框架/" class="pre">设计一个合理的蓝牙框架</a></div><div id="disqus_thread"><script>var disqus_shortname = 'louchu0604';
+var disqus_identifier = '2018/11/26/几种变量类型/';
+var disqus_title = '几种变量类型';
+var disqus_url = 'http://blog.kaolagogogo.fun/2018/11/26/几种变量类型/';
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//louchu0604.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="http://blog.kaolagogogo.fun"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/04/28/锁/">锁</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/weak/">weak</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/iOS事件响应链/">iOS事件响应链</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/catogory的几个问题/">关于catogory的几个问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/app启动过程/">app启动过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/做用户轨迹追踪时的思考/">做用户轨迹追踪时的思考</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/自动释放池的原理/">自动释放池的原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/消息转发/">消息转发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/深入比较strong和copy两种修饰符/">深入比较strong和copy两种修饰符</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/设计一个合理的蓝牙框架/">设计一个合理的蓝牙框架</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//louchu0604.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://git.oschina.net/Chu_Lou" title="Git地址" target="_blank">Git地址</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">KAOLA's note.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

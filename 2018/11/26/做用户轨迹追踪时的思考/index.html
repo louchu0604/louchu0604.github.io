@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>做用户轨迹追踪时的思考 | KAOLA's note</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">做用户轨迹追踪时的思考</h1><a id="logo" href="/.">KAOLA's note</a><p class="description">fix it</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">做用户轨迹追踪时的思考</h1><div class="post-meta">Nov 26, 2018<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><a data-disqus-identifier="2018/11/26/做用户轨迹追踪时的思考/" href="/2018/11/26/做用户轨迹追踪时的思考/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>确切地说是目前采用的方案。</p>
+<h1 id="why"><a href="#why" class="headerlink" title="why"></a>why</h1><ol>
+<li>快速定位用户反馈的问题</li>
+<li>运营可自定义追踪行为，方便研究</li>
+<li>为产品定位做更多的参考</li>
+</ol>
+<h1 id="what"><a href="#what" class="headerlink" title="what"></a>what</h1><ol>
+<li>追踪代码和业务代码分离</li>
+<li>抽离出来作为其他项目的Kit使用</li>
+<li>根据后台动态下发的文件追踪相应的页面、事件,并根据设置确定日志上传时机</li>
+</ol>
+<h1 id="how"><a href="#how" class="headerlink" title="how"></a>how</h1><h2 id="1-追踪页面轨迹"><a href="#1-追踪页面轨迹" class="headerlink" title="1. 追踪页面轨迹"></a>1. 追踪页面轨迹</h2><p>   主要借助nav的api </p>
+<p>   记下push\popset\present\dismiss的日志<br>   对于每个一vc用地址、className来标记，前者用来标记vc数组，后者用来匹配路径</p>
+<p>对于有tab的app，记录下当前的tab页很重要。<br>我采用的方法是，hook住<code>funname</code>、<code>funname</code>记录下tabName或者tabIndex，后者只有在代码主动设置<code>selectedIndex</code>的才会调用，前者会在用户点击<code>tabItem</code>的时候响应。对于后者，我们可以取index做标记；对于前者，我们可以取itemName做标记，因此如果对追踪路径有要求，有两个方式。</p>
+<ul>
+<li>app端，对tabName和index做一个对照</li>
+<li>后端配置时直接采用tabName||index的方式</li>
+</ul>
+<h2 id="2-追踪点击事件"><a href="#2-追踪点击事件" class="headerlink" title="2. 追踪点击事件"></a>2. 追踪点击事件</h2><p>   响应链</p>
+<p>   点击事件分: </p>
+<ul>
+<li>UIControl类点击事件<br>继承自UIControl的响应组件在响应到事件后，会将target、action转发给单例<code>UIApplication</code>,由<code>UIApplication</code>完成分发。</li>
+</ul>
+<p>   调用栈如下</p>
+<ul>
+<li>RunLoopRun…<ul>
+<li>UIApplication sendEvent<ul>
+<li>UIWindow sendEvent<ul>
+<li>UIWindow sendTouchesForEvent<ul>
+<li>UIControl…<ul>
+<li>UIApplication sendAction:to:from:forEvent:<br>*objc_sendMsg</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>   因此，我们可以hook住<code>UIApplication</code>的<code>sendAction:(SEL)action to:(nullable id)target from:(nullable id)sender forEvent:(nullable UIEvent *)event</code>方法，记录点击空间、响应对象、以及消息，而不必对UIButton、UISwitch等组件分别hook。<br>   对于实际项目，我们需要用户具体点击了哪个button、switch<br>   在这里，我没有采用tag之类的标志，首先加tag需要改动太多的业务代码，而且加了tag之后，还另外需要一张对照表来记录关系。<br>   系统自带的api可以满足我们的需求。<br>   以<code>UIButton</code>为例，UI上，我们会给其设置图片或者标题，直接用这个来标记，日志的可读性更佳。<br>   读取UIButton的标题不比赘述。<br>   这里这里介绍一下如何用图片来标记UIButton。<br>   UI控件有一个属性<code>accessibilityIdentifier</code>,习惯用storyboard的话，应该很熟悉这个属性。<br>   我们可以利用这个属性，在hook出设置图片的api，直接用图片的名字来作为标记。<br>   这样，我们对于一个button，可以用标题或者图片名来标记了，非常友好</p>
+<ul>
+<li><p>UIGestureRecognizer 类响应的手势 </p>
+<p>对于这类事件，大多数人的做法是hook住该类的<code>init</code>方法，然后再写一个target的分类，hook相应的方法。<br>此法可行，但是要给业务类写分类，我并不十分想这么干。。。。<br>于是我机智地查看了调用栈，</p>
+<ul>
+<li>RunLoopRun…</li>
+<li>UIApplication sendEvent<ul>
+<li>UIWindow sendEvent<ul>
+<li>UIGestureEnvironment _deliverEvent: toGestureRecognizers:usingBlock: <ul>
+<li>UIGestureRecognizer _updateGesture…<ul>
+<li>UIGestureRecognizerTarget  _sendActionWithGestureRecognizer:<br>*objc_sendMsg</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>  很明显，~~~~<br>  但是悲剧地发现 <code>UIGestureRecognizerTarget</code>是一个私有类<br>  难道这就是结束了吗？并不是。<br>  其实我们的诉求还是需要知道sender、target、 至于是在哪个VC内的控件，我们可以通过路径轨迹得知，不必纠结于此。</p>
+<ul>
+<li>tableView 等点击事件<br>要hooktableView的delegate、以及delegate相应的sel方法。<br>也就是要给业务类写分类了。。我并不十分想这么干。。。。<br>然而除此以外，<br>我没有想出特别好的办法。卒。</li>
+</ul>
+<h2 id="3-日志"><a href="#3-日志" class="headerlink" title="3. 日志"></a>3. 日志</h2><p>日志记录格式：<br>时间– 路径名-<br>        响应视图（视图标志）<br>        响应视图（视图标志）<br>        响应视图（视图标志）<br>       …..<br>时间– 路径名-<br>        响应视图（视图标志）<br>        响应视图（视图标志）<br>        响应视图（视图标志）<br>       …..<br>实时写入本地的txt文件中<br>上传策略由配置文件来决定</p>
+<h2 id="4-test"><a href="#4-test" class="headerlink" title="4. test"></a>4. test</h2><h2 id="5-improve"><a href="#5-improve" class="headerlink" title="5. improve"></a>5. improve</h2><p>  tableView等cell上的点击事件我还要继续找寻更好的方法</p>
+<p>ps.虽然现在用户真的很少，有些东西可研究可不研究，可做可不做，但是想到了不去做，就是觉得todo list越来越长很想去完成啊<br>源码可以在我的github上，Pie这个项目里找到【不一定更新了】</p>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://blog.kaolagogogo.fun/2018/11/26/做用户轨迹追踪时的思考/" data-id="cjv52olr40003mjxlbqqaw6j2" class="article-share-link">分享到</a><div class="tags"></div><div class="post-nav"><a href="/2018/11/26/app启动过程/" class="pre">app启动过程</a><a href="/2018/11/26/自动释放池的原理/" class="next">自动释放池的原理</a></div><div id="disqus_thread"><script>var disqus_shortname = 'louchu0604';
+var disqus_identifier = '2018/11/26/做用户轨迹追踪时的思考/';
+var disqus_title = '做用户轨迹追踪时的思考';
+var disqus_url = 'http://blog.kaolagogogo.fun/2018/11/26/做用户轨迹追踪时的思考/';
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//louchu0604.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="http://blog.kaolagogogo.fun"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/04/28/锁/">锁</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/weak/">weak</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/iOS事件响应链/">iOS事件响应链</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/catogory的几个问题/">关于catogory的几个问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/app启动过程/">app启动过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/做用户轨迹追踪时的思考/">做用户轨迹追踪时的思考</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/自动释放池的原理/">自动释放池的原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/消息转发/">消息转发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/深入比较strong和copy两种修饰符/">深入比较strong和copy两种修饰符</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/设计一个合理的蓝牙框架/">设计一个合理的蓝牙框架</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//louchu0604.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://git.oschina.net/Chu_Lou" title="Git地址" target="_blank">Git地址</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">KAOLA's note.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
