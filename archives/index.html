@@ -351,15 +351,19 @@
                 <span>锁</span>
         </a>
         <div class="abstract-content">
-            
+            #what什么是锁
+
 自旋锁(spinlock) do while 、忙等、（理解成死循环等锁 因此不适合较长时间的任务，等待的过程非常耗CPU）
 互斥锁(mutexlock) 休眠状态等锁
 读写锁(rwlock)：处于“写锁”时任何操作都要休眠等锁
 递归锁(recursivelock)：是互斥锁的一个特例 允许同一个线程在未释放拥有的锁时反复对该锁进行加锁操作
 死锁 一个资源被多次调用，而多次调用方都未能释放该资源就会造成一种互相等待的现象，若无外力作用，它们都将无法推进下去。此时称系统处于死 锁状态或系统产生了死锁。
 
+##what
+##why
+##how
 
-@synchronized 关键字加锁 用法简洁、可读性强：传入对象即可，没有显示...
+@synchronize...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
