@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>做用户轨迹追踪时的思考 · KAOLA&#39;s note</title>
+    <title>对象的引用计数是如何管理的 · KAOLA&#39;s note</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -217,7 +217,7 @@
                 <a href="/">KAOLA&#39;s note.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">做用户轨迹追踪时的思考</a>
+                <a href="#" class="post-name">对象的引用计数是如何管理的</a>
             </div>
     </div>
     
@@ -247,7 +247,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            做用户轨迹追踪时的思考
+            对象的引用计数是如何管理的
             <!-- 404 -->
             
         </h1>
@@ -264,20 +264,14 @@ height:50vh;
             <div class="post-intros">
                 <!-- 文章页标签  -->
                 
-                    <div class="post-intro-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="project">project</a>
-    
-</div>
-                
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1k</span>阅读时长: <span class="post-count reading-time">3 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">0</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2018/11/26</span>
+                    <span class="post-intro-time">2019/05/06</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -401,78 +395,7 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>确切地说是目前采用的方案。</p>
-<h1 id="why"><a href="#why" class="headerlink" title="why"></a>why</h1><ol>
-<li>快速定位用户反馈的问题</li>
-<li>运营可自定义追踪行为，方便研究</li>
-<li>为产品定位做更多的参考</li>
-</ol>
-<h1 id="what"><a href="#what" class="headerlink" title="what"></a>what</h1><ol>
-<li>追踪代码和业务代码分离</li>
-<li>抽离出来作为其他项目的Kit使用</li>
-<li>根据后台动态下发的文件追踪相应的页面、事件,并根据设置确定日志上传时机</li>
-</ol>
-<h1 id="how"><a href="#how" class="headerlink" title="how"></a>how</h1><h2 id="1-追踪页面轨迹"><a href="#1-追踪页面轨迹" class="headerlink" title="1. 追踪页面轨迹"></a>1. 追踪页面轨迹</h2><p>   主要借助nav的api </p>
-<p>   记下push\popset\present\dismiss的日志<br>   对于每个一vc用地址、className来标记，前者用来标记vc数组，后者用来匹配路径</p>
-<p>对于有tab的app，记录下当前的tab页很重要。<br>我采用的方法是，hook住<code>funname</code>、<code>funname</code>记录下tabName或者tabIndex，后者只有在代码主动设置<code>selectedIndex</code>的才会调用，前者会在用户点击<code>tabItem</code>的时候响应。对于后者，我们可以取index做标记；对于前者，我们可以取itemName做标记，因此如果对追踪路径有要求，有两个方式。</p>
-<ul>
-<li>app端，对tabName和index做一个对照</li>
-<li>后端配置时直接采用tabName||index的方式</li>
-</ul>
-<h2 id="2-追踪点击事件"><a href="#2-追踪点击事件" class="headerlink" title="2. 追踪点击事件"></a>2. 追踪点击事件</h2><p>   响应链</p>
-<p>   点击事件分: </p>
-<ul>
-<li>UIControl类点击事件<br>继承自UIControl的响应组件在响应到事件后，会将target、action转发给单例<code>UIApplication</code>,由<code>UIApplication</code>完成分发。</li>
-</ul>
-<p>   调用栈如下</p>
-<ul>
-<li>RunLoopRun…<ul>
-<li>UIApplication sendEvent<ul>
-<li>UIWindow sendEvent<ul>
-<li>UIWindow sendTouchesForEvent<ul>
-<li>UIControl…<ul>
-<li>UIApplication sendAction:to:from:forEvent:<br>*objc_sendMsg</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>   因此，我们可以hook住<code>UIApplication</code>的<code>sendAction:(SEL)action to:(nullable id)target from:(nullable id)sender forEvent:(nullable UIEvent *)event</code>方法，记录点击空间、响应对象、以及消息，而不必对UIButton、UISwitch等组件分别hook。<br>   对于实际项目，我们需要用户具体点击了哪个button、switch<br>   在这里，我没有采用tag之类的标志，首先加tag需要改动太多的业务代码，而且加了tag之后，还另外需要一张对照表来记录关系。<br>   系统自带的api可以满足我们的需求。<br>   以<code>UIButton</code>为例，UI上，我们会给其设置图片或者标题，直接用这个来标记，日志的可读性更佳。<br>   读取UIButton的标题不比赘述。<br>   这里这里介绍一下如何用图片来标记UIButton。<br>   UI控件有一个属性<code>accessibilityIdentifier</code>,习惯用storyboard的话，应该很熟悉这个属性。<br>   我们可以利用这个属性，在hook出设置图片的api，直接用图片的名字来作为标记。<br>   这样，我们对于一个button，可以用标题或者图片名来标记了，非常友好</p>
-<ul>
-<li><p>UIGestureRecognizer 类响应的手势 </p>
-<p>对于这类事件，大多数人的做法是hook住该类的<code>init</code>方法，然后再写一个target的分类，hook相应的方法。<br>此法可行，但是要给业务类写分类，我并不十分想这么干。。。。<br>于是我机智地查看了调用栈，</p>
-<ul>
-<li>RunLoopRun…</li>
-<li>UIApplication sendEvent<ul>
-<li>UIWindow sendEvent<ul>
-<li>UIGestureEnvironment _deliverEvent: toGestureRecognizers:usingBlock: <ul>
-<li>UIGestureRecognizer _updateGesture…<ul>
-<li>UIGestureRecognizerTarget  _sendActionWithGestureRecognizer:<br>*objc_sendMsg</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>  很明显，~~~~<br>  但是悲剧地发现 <code>UIGestureRecognizerTarget</code>是一个私有类<br>  难道这就是结束了吗？并不是。<br>  其实我们的诉求还是需要知道sender、target、 至于是在哪个VC内的控件，我们可以通过路径轨迹得知，不必纠结于此。</p>
-<ul>
-<li>tableView 等点击事件<br>要hooktableView的delegate、以及delegate相应的sel方法。<br>也就是要给业务类写分类了。。我并不十分想这么干。。。。<br>然而除此以外，<br>我没有想出特别好的办法。卒。</li>
-</ul>
-<h2 id="3-日志"><a href="#3-日志" class="headerlink" title="3. 日志"></a>3. 日志</h2><p>日志记录格式：<br>时间– 路径名-<br>        响应视图（视图标志）<br>        响应视图（视图标志）<br>        响应视图（视图标志）<br>       …..<br>时间– 路径名-<br>        响应视图（视图标志）<br>        响应视图（视图标志）<br>        响应视图（视图标志）<br>       …..<br>实时写入本地的txt文件中<br>上传策略由配置文件来决定</p>
-<h2 id="4-test"><a href="#4-test" class="headerlink" title="4. test"></a>4. test</h2><h2 id="5-improve"><a href="#5-improve" class="headerlink" title="5. improve"></a>5. improve</h2><p>  tableView等cell上的点击事件我还要继续找寻更好的方法</p>
-<p>ps.虽然现在用户真的很少，有些东西可研究可不研究，可做可不做，但是想到了不去做，就是觉得todo list越来越长很想去完成啊<br>源码可以在我的github上，Pie这个项目里找到【不一定更新了】</p>
-
+        
     </article>
     <!-- license  -->
     
@@ -480,17 +403,12 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2018/11/26/app启动过程/" title="app启动过程">
-                    <div class="nextTitle">app启动过程</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2018/11/26/自动释放池的原理/" title="自动释放池的原理">
-                    <div class="prevTitle">自动释放池的原理</div>
+                <a href="/2019/04/28/锁/" title="锁">
+                    <div class="prevTitle">锁</div>
                 </a>
             
         </li>
@@ -609,7 +527,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#why"><span class="toc-number">1.</span> <span class="toc-text">why</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#what"><span class="toc-number">2.</span> <span class="toc-text">what</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#how"><span class="toc-number">3.</span> <span class="toc-text">how</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-追踪页面轨迹"><span class="toc-number">3.1.</span> <span class="toc-text">1. 追踪页面轨迹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-追踪点击事件"><span class="toc-number">3.2.</span> <span class="toc-text">2. 追踪点击事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-日志"><span class="toc-number">3.3.</span> <span class="toc-text">3. 日志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-test"><span class="toc-number">3.4.</span> <span class="toc-text">4. test</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-improve"><span class="toc-number">3.5.</span> <span class="toc-text">5. improve</span></a></li></ol></li></ol>
+        
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>

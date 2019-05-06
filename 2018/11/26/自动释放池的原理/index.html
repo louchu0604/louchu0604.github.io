@@ -431,12 +431,12 @@ https://developer.apple.com/documentation/foundation/nsautoreleasepool#//apple_r
 </ul>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> AutoreleasePoolPage </span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// EMPTY_POOL_PLACEHOLDER is stored in TLS when exactly one pool is </span></span><br><span class="line">    <span class="comment">// pushed and it has never contained any objects. This saves memory </span></span><br><span class="line">    <span class="comment">// when the top level (i.e. libdispatch) pushes and pops pools but </span></span><br><span class="line">    <span class="comment">// never uses them.</span></span><br><span class="line"><span class="meta">#   define EMPTY_POOL_PLACEHOLDER ((id*)1)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#   define POOL_BOUNDARY nil //分界线</span></span><br><span class="line">    <span class="keyword">static</span> pthread_key_t <span class="keyword">const</span> key = AUTORELEASE_POOL_KEY;</span><br><span class="line">    <span class="keyword">static</span> uint8_t <span class="keyword">const</span> SCRIBBLE = <span class="number">0xA3</span>;  <span class="comment">// 0xA3A3A3A3 after releasing</span></span><br><span class="line">    <span class="keyword">static</span> size_t <span class="keyword">const</span> SIZE = </span><br><span class="line"><span class="meta">#if PROTECT_AUTORELEASEPOOL</span></span><br><span class="line">        PAGE_MAX_SIZE;  <span class="comment">// must be multiple of vm page size </span></span><br><span class="line"><span class="meta">#else</span></span><br><span class="line">        PAGE_MAX_SIZE;  <span class="comment">// size and alignment, power of 2</span></span><br><span class="line"><span class="meta">#endif</span></span><br><span class="line">    <span class="keyword">static</span> size_t <span class="keyword">const</span> COUNT = SIZE / <span class="keyword">sizeof</span>(<span class="keyword">id</span>);</span><br><span class="line"></span><br><span class="line">    magic_t <span class="keyword">const</span> magic;<span class="comment">// magic_t</span></span><br><span class="line">    <span class="keyword">id</span> *next;</span><br><span class="line">    pthread_t <span class="keyword">const</span> thread;</span><br><span class="line">    AutoreleasePoolPage * <span class="keyword">const</span> parent;</span><br><span class="line">    AutoreleasePoolPage *child;</span><br><span class="line">    uint32_t <span class="keyword">const</span> depth;</span><br><span class="line">    uint32_t hiwat;</span><br><span class="line"></span><br><span class="line"> ....</span><br><span class="line"></span><br><span class="line">     <span class="keyword">id</span> * begin() &#123;</span><br><span class="line">        <span class="keyword">return</span> (<span class="keyword">id</span> *) ((uint8_t *)<span class="keyword">this</span>+<span class="keyword">sizeof</span>(*<span class="keyword">this</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">id</span> * end() &#123;</span><br><span class="line">        <span class="keyword">return</span> (<span class="keyword">id</span> *) ((uint8_t *)<span class="keyword">this</span>+SIZE);</span><br><span class="line">    &#125;</span><br><span class="line">    ........</span><br><span class="line">     <span class="keyword">id</span> *add(<span class="keyword">id</span> obj)</span><br><span class="line">    &#123;</span><br><span class="line">        assert(!full());</span><br><span class="line">        unprotect();</span><br><span class="line">        <span class="keyword">id</span> *ret = next;  <span class="comment">// faster than `return next-1` because of aliasing</span></span><br><span class="line">        *next++ = obj;</span><br><span class="line">        protect();</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">    .......</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> releaseAll() </span><br><span class="line">    &#123;</span><br><span class="line">        releaseUntil(begin());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h3 id="3-消息调用栈"><a href="#3-消息调用栈" class="headerlink" title="3. 消息调用栈"></a>3. 消息调用栈</h3><ul>
-<li>对象发出autorelease<ul>
+<li><p>对象发出autorelease</p>
+<ul>
 <li>rootAutorelease<ul>
 <li>rootAutorelease2<ul>
 <li>AutoreleasePoolPage::autorelease<ul>
-<li>autoreleaseFast</li>
-</ul>
+<li>autoreleaseFast<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">id</span> *autoreleaseFast(<span class="keyword">id</span> obj)</span><br><span class="line">   &#123;</span><br><span class="line">       AutoreleasePoolPage *page = hotPage();<span class="comment">//取出hotPage</span></span><br><span class="line">       <span class="keyword">if</span> (page &amp;&amp; !page-&gt;full()) &#123;<span class="comment">//page存在且没满</span></span><br><span class="line">           <span class="keyword">return</span> page-&gt;add(obj);<span class="comment">//对象加入该page</span></span><br><span class="line">       &#125; <span class="keyword">else</span> <span class="keyword">if</span> (page) &#123;<span class="comment">//该页已满 </span></span><br><span class="line">           <span class="keyword">return</span> autoreleaseFullPage(obj, page);<span class="comment">//调用autoreleaseFullPage 替换当前的hotPAge 然后再执行add（obj）</span></span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;<span class="comment">//当前没有page</span></span><br><span class="line">           <span class="keyword">return</span> autoreleaseNoPage(obj);<span class="comment">//调用autoreleaseNoPage  新增page   然后再执行add（obj）</span></span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -444,8 +444,9 @@ https://developer.apple.com/documentation/foundation/nsautoreleasepool#//apple_r
 </li>
 </ul>
 </li>
-<li><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">id</span> *autoreleaseFast(<span class="keyword">id</span> obj)</span><br><span class="line">   &#123;</span><br><span class="line">       AutoreleasePoolPage *page = hotPage();<span class="comment">//取出hotPage</span></span><br><span class="line">       <span class="keyword">if</span> (page &amp;&amp; !page-&gt;full()) &#123;<span class="comment">//page存在且没满</span></span><br><span class="line">           <span class="keyword">return</span> page-&gt;add(obj);<span class="comment">//对象加入该page</span></span><br><span class="line">       &#125; <span class="keyword">else</span> <span class="keyword">if</span> (page) &#123;<span class="comment">//该页已满 </span></span><br><span class="line">           <span class="keyword">return</span> autoreleaseFullPage(obj, page);<span class="comment">//调用autoreleaseFullPage 替换当前的hotPAge 然后再执行add（obj）</span></span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;<span class="comment">//当前没有page</span></span><br><span class="line">           <span class="keyword">return</span> autoreleaseNoPage(obj);<span class="comment">//调用autoreleaseNoPage  新增page   然后再执行add（obj）</span></span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+</ul>
 </li>
+<li></li>
 </ul>
 <h3 id="4-实现细节"><a href="#4-实现细节" class="headerlink" title="4. 实现细节"></a>4. 实现细节</h3><h4 id="hotPage"><a href="#hotPage" class="headerlink" title="hotPage()"></a><code>hotPage()</code></h4><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> AutoreleasePoolPage *hotPage() </span><br><span class="line">&#123;</span><br><span class="line">    AutoreleasePoolPage *result = (AutoreleasePoolPage *)</span><br><span class="line">        tls_get_direct(key);<span class="comment">//根据tls取出最近储存的page</span></span><br><span class="line">    <span class="keyword">if</span> ((<span class="keyword">id</span> *)result == EMPTY_POOL_PLACEHOLDER) <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">    <span class="keyword">if</span> (result) result-&gt;fastcheck();</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="add-obj"><a href="#add-obj" class="headerlink" title="add(obj)"></a><code>add(obj)</code></h4><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">id</span> *add(<span class="keyword">id</span> obj)</span><br><span class="line">&#123;</span><br><span class="line">    assert(!full());</span><br><span class="line">    unprotect();<span class="comment">//</span></span><br><span class="line">    <span class="keyword">id</span> *ret = next;  <span class="comment">// faster than `return next-1` because of aliasing</span></span><br><span class="line">    *next++ = obj;<span class="comment">//并没有判断obj==nil</span></span><br><span class="line">    protect();</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -783,9 +784,34 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 11
+        Total : 12
         </div>
         <!-- search  -->
         
@@ -798,6 +824,11 @@ top:50vh;
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/06</span><a class="archive-post-title" href="/2019/05/06/对象的引用计数是如何管理的/">对象的引用计数是如何管理的</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -820,17 +851,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/catogory的几个问题/">关于catogory的几个问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/app启动过程/">app启动过程</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/iOS事件响应链/">iOS事件响应链</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/做用户轨迹追踪时的思考/">做用户轨迹追踪时的思考</a>
         </li>
     
     
@@ -850,7 +876,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/catogory的几个问题/">关于catogory的几个问题</a>
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/iOS事件响应链/">iOS事件响应链</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/消息转发/">消息转发</a>
         </li>
     
     
@@ -860,7 +891,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/消息转发/">消息转发</a>
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/做用户轨迹追踪时的思考/">做用户轨迹追踪时的思考</a>
         </li>
     
     </ul></div>

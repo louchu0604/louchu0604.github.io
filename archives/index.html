@@ -346,6 +346,29 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href="/2019/05/06/对象的引用计数是如何管理的/">
+            
+                <span>对象的引用计数是如何管理的</span>
+        </a>
+        <div class="abstract-content">
+            
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/05/06</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href="/2019/04/28/锁/">
             
                 <span>锁</span>
@@ -636,41 +659,6 @@ ARC下，非alloc/new/copy/mutableCopy开头的类方法默认返回的是autore
         </div>
     </article>
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2018/11/26/设计一个合理的蓝牙框架/">
-            
-                <span>设计一个合理的蓝牙框架</span>
-        </a>
-        <div class="abstract-content">
-            蓝牙：为方便接入特定协议下的设备，有必要对硬件设备进行抽象，将蓝牙通讯的过程、逻辑封装成Framework。调用者不要花时间分析芯片的协议、特性，只需要拿到Framework，调用API即可。基于以上前提，这个框架需要具备以下条件：
-
-指令响应及时、不需要调用者进行各种判断（比如设备是否断开、设备是都需要重连、指令是否需要重发、指令发送超时）
-能直接将数据封装好给调用者使用。
-指令有优先级。调用者可以设定指令优先级。（如调用者将“升级指令”设为最优，则处理完此次指令之前，其他指令都在等待序列）
-
-由于底层会将数据分成以20bytes为单位进行读取。所以客户端要对收到的数据包进行合包。合包...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="project">project</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
     <!-- paginator  -->
     
     <nav class="page-nav">
@@ -911,9 +899,34 @@ ARC下，非alloc/new/copy/mutableCopy开头的类方法默认返回的是autore
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 11
+        Total : 12
         </div>
         <!-- search  -->
         
@@ -926,6 +939,11 @@ ARC下，非alloc/new/copy/mutableCopy开头的类方法默认返回的是autore
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/06</span><a class="archive-post-title" href="/2019/05/06/对象的引用计数是如何管理的/">对象的引用计数是如何管理的</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -948,17 +966,12 @@ ARC下，非alloc/new/copy/mutableCopy开头的类方法默认返回的是autore
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/catogory的几个问题/">关于catogory的几个问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/app启动过程/">app启动过程</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/iOS事件响应链/">iOS事件响应链</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/做用户轨迹追踪时的思考/">做用户轨迹追踪时的思考</a>
         </li>
     
     
@@ -978,7 +991,12 @@ ARC下，非alloc/new/copy/mutableCopy开头的类方法默认返回的是autore
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/catogory的几个问题/">关于catogory的几个问题</a>
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/iOS事件响应链/">iOS事件响应链</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/消息转发/">消息转发</a>
         </li>
     
     
@@ -988,7 +1006,7 @@ ARC下，非alloc/new/copy/mutableCopy开头的类方法默认返回的是autore
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/消息转发/">消息转发</a>
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/做用户轨迹追踪时的思考/">做用户轨迹追踪时的思考</a>
         </li>
     
     </ul></div>
