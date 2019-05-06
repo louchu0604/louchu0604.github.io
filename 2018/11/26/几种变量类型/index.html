@@ -266,7 +266,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">261</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">404</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -395,10 +395,7 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <ol>
-<li>全局变量：</li>
-</ol>
-<ul>
+        <h1 id="1-全局变量："><a href="#1-全局变量：" class="headerlink" title="1.  全局变量："></a>1.  全局变量：</h1><ul>
 <li>要在函数外面声明</li>
 <li>可以跨文件访问</li>
 <li>声明时可以赋值 默认初始值为0</li>
@@ -406,27 +403,24 @@ height:50vh;
 <li><code>extern</code> 关键字</li>
 <li><code>extern varName</code>代表的是<code>varName</code>是调用外部声明的变量</li>
 </ul>
-<ol start="2">
-<li>静态变量 </li>
-</ol>
-<ul>
+<h1 id="2-静态变量"><a href="#2-静态变量" class="headerlink" title="2. 静态变量"></a>2. 静态变量</h1><ul>
 <li>可以在函数外部声明、亦可在函数外部声明</li>
-<li>仅在声明文件内访问</li>
+<li>仅在声明文件内访问、不可以改变局部变量的作用域</li>
 <li>声明时关键字为<code>static</code></li>
 <li>声明时可以赋值 默认初始值为0</li>
-<li>储存在【全局（静态）存储区static】</li>
+<li>储存在【全局（静态）存储区static】、只有一份内存</li>
+<li>可以延长变量的生命周期</li>
 </ul>
-<ol start="3">
-<li>局部变量</li>
-</ol>
-<ul>
+<h1 id="3-局部变量"><a href="#3-局部变量" class="headerlink" title="3. 局部变量"></a>3. 局部变量</h1><ul>
 <li>要在函数内部声明</li>
 <li>运行到该函数时才会分配内存</li>
 <li>只在声明变量的函数内部访问</li>
 <li>一般数据类型储存在栈帧中，new init开头的方法初始化的对象储存在堆上。</li>
 </ul>
-<ol start="4">
-<li>内存分区<ol>
+<h1 id="4-const关键字"><a href="#4-const关键字" class="headerlink" title="4. const关键字"></a>4. const关键字</h1><ul>
+<li>修饰关键字右边的变量</li>
+<li>修饰后变量为只读</li>
+<li>场景🌰：提供一个方法，放入参数是某个变量的地址，方法内部不能修改地址（在诸多Foundation框架提供的API中可以看到这个场景的应用）<h1 id="5-内存分区"><a href="#5-内存分区" class="headerlink" title="5. 内存分区"></a>5. 内存分区</h1><ol>
 <li>栈区：</li>
 <li>堆区：</li>
 <li>全局区：</li>
@@ -434,10 +428,10 @@ height:50vh;
 <li>程序代码区</li>
 </ol>
 </li>
-</ol>
-<p>题外话</p>
-<p>结合看过的博客，自己在实践的过程当中发现，<code>NSString</code> 比较特殊，并不完全如其他对象，是分配在堆区的。</p>
-<h1 id="why"><a href="#why" class="headerlink" title="why"></a>why</h1>
+</ul>
+<h1 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h1><p>结合看过的博客，自己在实践的过程当中发现，<code>NSString</code> 比较特殊，并不完全如其他对象，是分配在堆区的。</p>
+<p>update：在objc的源码中经常可以看到isTargetPointer这样的判断，由此知道了NSTargetPointer这样的特殊类型，笔记请看[NSTargetPointer]</p>
+
     </article>
     <!-- license  -->
     
@@ -569,7 +563,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#why"><span class="toc-number">1.</span> <span class="toc-text">why</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-全局变量："><span class="toc-number">1.</span> <span class="toc-text">1.  全局变量：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-静态变量"><span class="toc-number">2.</span> <span class="toc-text">2. 静态变量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-局部变量"><span class="toc-number">3.</span> <span class="toc-text">3. 局部变量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-const关键字"><span class="toc-number">4.</span> <span class="toc-text">4. const关键字</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-内存分区"><span class="toc-number">5.</span> <span class="toc-text">5. 内存分区</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#题外话"><span class="toc-number">6.</span> <span class="toc-text">题外话</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
