@@ -1,7 +1,7 @@
 ---
 title: weak
 date: 2018-11-26 00:52:05
-tags:
+tags:objc
 ---
 # why 
 一般情况下，`weak`修饰对象，`assign`修饰基本数据类型。
