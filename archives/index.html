@@ -399,6 +399,12 @@ SideTables
             </div>
             <!-- tags  -->
             
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="objc">objc</a>
+    
+</div>
+            
         </div>
     </article>
     
@@ -453,6 +459,12 @@ category是无法添加实例变量的（因为在运行期，对象的内存布
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
             </div>
             <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="objc">objc</a>
+    
+</div>
             
         </div>
     </article>
@@ -515,6 +527,12 @@ how1. 追踪页面轨迹   主要借助nav的api
             </div>
             <!-- tags  -->
             
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="project">project</a>
+    
+</div>
+            
         </div>
     </article>
     
@@ -529,12 +547,11 @@ how1. 追踪页面轨迹   主要借助nav的api
                 <span>自动释放池的原理</span>
         </a>
         <div class="abstract-content">
-            背景:前文提到了weak修饰对象原理。对于iOS如何管理内存的释放销毁，还需要知道自动释放池技术，故本文会在源码的基础上讨论。
-autoreleasepool先总结：
-
+            背景前文提到了weak修饰对象原理。对于iOS如何管理内存的释放销毁，还需要知道自动释放池技术，故本文会在源码的基础上讨论。
+autoreleasepool总结：
 ARC下，非alloc/new/copy/mutableCopy开头的类方法默认返回的是autoreleased对象，编译器会自动插入相关的autorelease语句
 主线程的runloop进入时（entry），其回调内会调用 _objc_autoreleasePoolPush() 创建自动释放池。
-准备进入休眠(BeforeWaiting) 时调用_objc_autoreleasePoolPop() 和 _objc_a...
+准备进入休眠(BeforeWaiting) 时调用_objc_autoreleasePoolPop() 和 _objc_auto...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -542,6 +559,12 @@ ARC下，非alloc/new/copy/mutableCopy开头的类方法默认返回的是autore
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
             </div>
             <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="objc">objc</a>
+    
+</div>
             
         </div>
     </article>
@@ -557,17 +580,15 @@ ARC下，非alloc/new/copy/mutableCopy开头的类方法默认返回的是autore
                 <span>消息转发</span>
         </a>
         <div class="abstract-content">
-            backgroundwhywhat
-ps 总是会看到各种博文里提到runtime我觉得runtime 有两个角度可以解释
+            Background or Question
+一般给对象的属性赋值主要有两种方式， _var=newValue 和 objc.var = newValue，大家都知道前者效率高，后者效率低
+开发的过程中，引起APP奔溃的叫常见的一个场景是unRecognizedSelector，顾名思义是无法识别的方法or选择子
+经常会有人问一个很宏观的问题：你是如何理解runtime的，我觉得runtime 有两个角度可以解释
+
+
 一套用c实现的底层API 源码可以在apple的source library里下载
 一种动态运行机制
-
-在iOS中，程序运行时调用的方法【or 消息】并不是编译时期就确定下来的，可以在运行时才确定、甚至是修改。消息转发的机制，也是因为有runtime，才能如此设计。
-
-疑问：forwardingTarget和forwardInvocation在本来找不到对应的方法时，可以将消息转发给可以其他对象，那他们的区别是什么？
-
-
-how在源码里找了一下对应的实现forward...
+在iOS中，程序运行时调用的方法【or 消息】并不是编译时期就确定下来...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -575,6 +596,12 @@ how在源码里找了一下对应的实现forward...
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
             </div>
             <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="objc">objc</a>
+    
+</div>
             
         </div>
     </article>
@@ -599,6 +626,12 @@ how在源码里找了一下对应的实现forward...
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
             </div>
             <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="objc">objc</a>
+    
+</div>
             
         </div>
     </article>
@@ -628,6 +661,12 @@ how在源码里找了一下对应的实现forward...
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
             </div>
             <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="project">project</a>
+    
+</div>
             
         </div>
     </article>
@@ -956,6 +995,10 @@ how在源码里找了一下对应的实现forward...
   </div>
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="objc"><span class="iconfont-archer">&#xe606;</span>objc</span>
+    
+        <span class="sidebar-tag-name" data-tags="project"><span class="iconfont-archer">&#xe606;</span>project</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

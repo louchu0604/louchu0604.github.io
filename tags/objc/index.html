@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>关于catogory的几个问题 · KAOLA&#39;s note</title>
+    <title>KAOLA&#39;s note</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -203,23 +203,12 @@
 </head>
 
     
-        <body class="post-body">
-    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
-    
-    <div class="banner">
-            <div class="blog-title">
-                <a href="/">KAOLA&#39;s note.</a>
-            </div>
-            <div class="post-title">
-                <a href="#" class="post-name">关于catogory的几个问题</a>
-            </div>
-    </div>
     
     <a class="home-link" href="/">KAOLA's note.</a>
 </header>
@@ -231,74 +220,24 @@
 
 
 
-
-height:50vh;
 ">
     
     <!-- 主页  -->
-    
-    
-    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
-            
-            关于catogory的几个问题
-            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
-            
-            <!-- 404 -->
-            
         </p>
         <!-- 文章页meta -->
-        
-            <div class="post-intros">
-                <!-- 文章页标签  -->
-                
-                    <div class="post-intro-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="objc">objc</a>
-    
-</div>
-                
-                
-                    <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">481</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
-                    </div>
-                
-                <div class="post-intro-meta">
-                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2018/11/26</span>
-                    
-                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                        <span class="iconfont-archer">&#xe602;</span>
-                        <span id="busuanzi_value_page_pv"></span>
-                    </span>
-                    
-                    <span class="shareWrapper">
-                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
-                        <span class="shareText">Share</span>
-                        <ul class="shareList">
-                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                                <div class="share-qrcode"></div>
-                            </li>
-                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
         
     </div>
 </div>
@@ -399,57 +338,181 @@ height:50vh;
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main post-page">
-    <article class="article-entry">
-        <p>先介绍分类：<br>分类可以为已经存在的类添加方法，还可以把类的实现分在几个不同的文件里。<br>Q1：<br>下面这段话摘自美团点评的文章：</p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>category是无法添加实例变量的（因为在运行期，对象的内存布局已经确定，如果添加实例变量就会破坏类的内部布局，这对编译型语言来说是灾难性的）<br>我们可以在objc的源码中看到category的结构，如下：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> category_t &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *name;<span class="comment">// 类名</span></span><br><span class="line">    classref_t cls;<span class="comment">// 要扩展的类对象</span></span><br><span class="line">    <span class="keyword">struct</span> method_list_t *instanceMethods;<span class="comment">// 实例方法</span></span><br><span class="line">    <span class="keyword">struct</span> method_list_t *classMethods;<span class="comment">// 类方法</span></span><br><span class="line">    <span class="keyword">struct</span> protocol_list_t *protocols;<span class="comment">// 分类实现的协议</span></span><br><span class="line">    <span class="keyword">struct</span> property_list_t *instanceProperties;<span class="comment">// 分类的属性</span></span><br><span class="line">&#125; category_t;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-</blockquote>
-</blockquote>
-<p>从结构中可以知道，分类可以添加实例方法、类方法、协议、属性，但是无法添加实例变量。</p>
-<p>Q2：<br>为什么分类方法会覆盖原来的类方法</p>
-<h1 id="先问是不是，再问为什么"><a href="#先问是不是，再问为什么" class="headerlink" title="先问是不是，再问为什么"></a>先问是不是，再问为什么</h1><h3 id="首先答案是NO-验证方法很简单，打印出方法列表，会发现原来的类方法还在，所谓的覆盖指的是“分类中的方法在方法查找时会先于原来的类方法被命中”"><a href="#首先答案是NO-验证方法很简单，打印出方法列表，会发现原来的类方法还在，所谓的覆盖指的是“分类中的方法在方法查找时会先于原来的类方法被命中”" class="headerlink" title="首先答案是NO 验证方法很简单，打印出方法列表，会发现原来的类方法还在，所谓的覆盖指的是“分类中的方法在方法查找时会先于原来的类方法被命中”"></a>首先答案是NO 验证方法很简单，打印出方法列表，会发现原来的类方法还在，所谓的覆盖指的是“分类中的方法在方法查找时会先于原来的类方法被命中”</h3><p>###为什么呢？<br>运行时 遍历各个分类中的方法【listA】与原来类的方法【listB】然后组成一个大的方法列表newlist，A在前，B在后，如果listA与listB中都有一个methodA，那么在方法查找时，排在newlist前的分类方法会先被找到，就会让调用者产生“原来的类方法被分类方法覆盖之感”<br>以此可推，如果在实际应用中我们想要调用“被覆盖的方法”，可以获取类的方法列表，从后往前遍历，找到要调用的方法即可【或者从前往后遍历，获取同名的方法列表，然后取出最后一个】</p>
-<p>Q3：</p>
+            <main class="main index-page">
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2018/11/26/weak/">
+            
+                <span>weak</span>
+        </a>
+        <div class="abstract-content">
+            why一般情况下，weak修饰对象，assign修饰基本数据类型。
 
+weak和assign，并不会增加对象的rc
+assign修饰的对象，出栈后，对象所指向的内存块极有可能被回收，如果此时再访问指针，会出现野指针的情况
+weak修饰的对象，因为weak所修饰的对象被系统回收之后，指针会被置为nil，不会出现也指针
+
+下面会从源码中一探究竟。（源码的版本是objc4-723）weak 源码源码中出现的数据结构
+SideTables
+
+123static StripedMap&lt;SideTable&gt;&amp; SideTables() &#123;    return *rei...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="objc">objc</a>
+    
+</div>
+            
+        </div>
     </article>
-    <!-- license  -->
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2018/11/26/catogory的几个问题/">
+            
+                <span>关于catogory的几个问题</span>
+        </a>
+        <div class="abstract-content">
+            先介绍分类：分类可以为已经存在的类添加方法，还可以把类的实现分在几个不同的文件里。Q1：下面这段话摘自美团点评的文章：
+
+
+
+category是无法添加实例变量的（因为在运行期，对象的内存布局已经确定，如果添加实例变量就会破坏类的内部布局，这对编译型语言来说是灾难性的）我们可以在objc的源码中看到category的结构，如下：12345678typedef struct category_t &#123;    const char *name;// 类名    classref_t cls;// 要扩展的类对象    struct method_list_t *instanceMet...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="objc">objc</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2018/11/26/自动释放池的原理/">
+            
+                <span>自动释放池的原理</span>
+        </a>
+        <div class="abstract-content">
+            背景前文提到了weak修饰对象原理。对于iOS如何管理内存的释放销毁，还需要知道自动释放池技术，故本文会在源码的基础上讨论。
+autoreleasepool总结：
+ARC下，非alloc/new/copy/mutableCopy开头的类方法默认返回的是autoreleased对象，编译器会自动插入相关的autorelease语句
+主线程的runloop进入时（entry），其回调内会调用 _objc_autoreleasePoolPush() 创建自动释放池。
+准备进入休眠(BeforeWaiting) 时调用_objc_autoreleasePoolPop() 和 _objc_auto...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="objc">objc</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2018/11/26/消息转发/">
+            
+                <span>消息转发</span>
+        </a>
+        <div class="abstract-content">
+            Background or Question
+一般给对象的属性赋值主要有两种方式， _var=newValue 和 objc.var = newValue，大家都知道前者效率高，后者效率低
+开发的过程中，引起APP奔溃的叫常见的一个场景是unRecognizedSelector，顾名思义是无法识别的方法or选择子
+经常会有人问一个很宏观的问题：你是如何理解runtime的，我觉得runtime 有两个角度可以解释
+
+
+一套用c实现的底层API 源码可以在apple的source library里下载
+一种动态运行机制
+在iOS中，程序运行时调用的方法【or 消息】并不是编译时期就确定下来...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="objc">objc</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2018/11/26/深入比较strong和copy两种修饰符/">
+            
+                <span>深入比较strong和copy两种修饰符</span>
+        </a>
+        <div class="abstract-content">
+            strong和copy是property的两个基本修饰符，在oc中，一般情况下用来修饰对象。strong：property的默认修饰符。copy：一般用来修饰拥有可变类型的对象。比如NSString NSDictionary NSArray.在学习oc的过程中，大多数的资料里都提到了以上两点，却没有详细说明这么做的原因。本文旨在oc底层实现的基础上探讨以上两点的原因和合理性。
+一、strong和copy的不同、以及为什么NSString等对象一般用copy来修饰？对象使用strong和copy修饰后，都可以让对象的RC＋1。其不同点可以看一下代码。123456789101112@pro...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="objc">objc</a>
+    
+</div>
+            
+        </div>
+    </article>
     
     <!-- paginator  -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2018/11/26/iOS事件响应链/" title="iOS事件响应链">
-                    <div class="nextTitle">iOS事件响应链</div>
-                </a>
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href="/2018/11/26/app启动过程/" title="app启动过程">
-                    <div class="prevTitle">app启动过程</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- 评论插件 -->
-    <!-- 来必力City版安装代码 -->
-
-<!-- City版安装代码已完成 -->
     
-    
-    <!-- partial('_partial/comment/changyan') -->
-    <!--PC版-->
-
-
-    
-    
-
-    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -534,24 +597,6 @@ height:50vh;
 </footer>
     </div>
     <!-- toc -->
-    
-    <div class="toc-wrapper" style=
-    
-
-
-
-
-
-
-
-top:50vh;
-
-    >
-        <div class="toc-catalog">
-            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-        </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#先问是不是，再问为什么"><span class="toc-number">1.</span> <span class="toc-text">先问是不是，再问为什么</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#首先答案是NO-验证方法很简单，打印出方法列表，会发现原来的类方法还在，所谓的覆盖指的是“分类中的方法在方法查找时会先于原来的类方法被命中”"><span class="toc-number">1.0.1.</span> <span class="toc-text">首先答案是NO 验证方法很简单，打印出方法列表，会发现原来的类方法还在，所谓的覆盖指的是“分类中的方法在方法查找时会先于原来的类方法被命中”</span></a></li></ol></li></ol></li></ol>
-    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -856,8 +901,6 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
-    
-        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>

@@ -264,9 +264,15 @@ height:50vh;
             <div class="post-intros">
                 <!-- 文章页标签  -->
                 
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="objc">objc</a>
+    
+</div>
+                
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">435</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">523</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -395,15 +401,15 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="background"><a href="#background" class="headerlink" title="background"></a>background</h1><h1 id="why"><a href="#why" class="headerlink" title="why"></a>why</h1><h1 id="what"><a href="#what" class="headerlink" title="what"></a>what</h1><ul>
-<li>ps 总是会看到各种博文里提到<code>runtime</code><br>我觉得<code>runtime</code> 有两个角度可以解释</li>
+        <h1 id="Background-or-Question"><a href="#Background-or-Question" class="headerlink" title="Background or Question"></a>Background or Question</h1><ol>
+<li>一般给对象的属性赋值主要有两种方式， <code>_var=newValue</code> 和 <code>objc.var = newValue</code>，大家都知道前者效率高，后者效率低</li>
+<li>开发的过程中，引起APP奔溃的叫常见的一个场景是<code>unRecognizedSelector</code>，顾名思义是无法识别的方法or选择子</li>
+<li>经常会有人问一个很宏观的问题：你是如何理解<code>runtime</code>的，我觉得<code>runtime</code> 有两个角度可以解释</li>
+</ol>
+<ul>
 <li>一套用c实现的底层API 源码可以在apple的source library里下载</li>
 <li>一种动态运行机制</li>
-</ul>
-<p>在iOS中，程序运行时调用的方法【or 消息】并不是编译时期就确定下来的，可以在运行时才确定、甚至是修改。<br>消息转发的机制，也是因为有<code>runtime</code>，才能如此设计。</p>
-<ul>
-<li><p>疑问：<code>forwardingTarget</code>和<code>forwardInvocation</code>在本来找不到对应的方法时，可以将消息转发给可以其他对象，那他们的区别是什么？</p>
-</li>
+<li>在iOS中，程序运行时调用的方法【or 消息】并不是编译时期就确定下来的，可以在运行时才确定、甚至是修改。<br>消息转发的机制，也是因为有<code>runtime</code>，才能如此设计。</li>
 </ul>
 <h1 id="how"><a href="#how" class="headerlink" title="how"></a>how</h1><p>在源码里找了一下对应的实现<br><code>forwardInvocation</code>的调用栈：</p>
 <ul>
@@ -418,6 +424,7 @@ height:50vh;
 <p>在TestObj中实现了：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)hello</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"found hello"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h4 id="③-forwardInvocation-转发"><a href="#③-forwardInvocation-转发" class="headerlink" title="③ forwardInvocation 转发"></a>③ <code>forwardInvocation</code> 转发</h4><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)forwardInvocation:(<span class="built_in">NSInvocation</span> *)anInvocation</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSString</span> *clsStr = <span class="built_in">NSStringFromSelector</span>(anInvocation.selector);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ([clsStr isEqualToString:<span class="string">@"hello"</span>])</span><br><span class="line">    &#123;</span><br><span class="line">        [anInvocation invokeWithTarget:[TestObj new]];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">-(<span class="built_in">NSMethodSignature</span>*)methodSignatureForSelector:(SEL)selector</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSMethodSignature</span> *signature = [<span class="keyword">super</span> methodSignatureForSelector:selector];</span><br><span class="line">    <span class="keyword">if</span> (! signature) &#123;</span><br><span class="line">        signature = [[TestObj new] methodSignatureForSelector:selector];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> signature;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>跟②相似，③也是将消息转发给备用接收者。</p>
+<h1 id="我的困惑"><a href="#我的困惑" class="headerlink" title="我的困惑"></a>我的困惑</h1><p><code>forwardingTarget</code>和<code>forwardInvocation</code>在本来找不到对应的方法时，可以将消息转发给可以其他对象，那他们的区别是什么？</p>
 
     </article>
     <!-- license  -->
@@ -555,7 +562,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#background"><span class="toc-number">1.</span> <span class="toc-text">background</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#why"><span class="toc-number">2.</span> <span class="toc-text">why</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#what"><span class="toc-number">3.</span> <span class="toc-text">what</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#how"><span class="toc-number">4.</span> <span class="toc-text">how</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#根据消息发送、转发的流程，大概有以下三种方法"><span class="toc-number">4.0.1.</span> <span class="toc-text">根据消息发送、转发的流程，大概有以下三种方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#①-在分类中重写resolveInstanceMethod-动态添加方法"><span class="toc-number">4.0.1.1.</span> <span class="toc-text">① 在分类中重写resolveInstanceMethod 动态添加方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#②-forwardingTarget-转发"><span class="toc-number">4.0.1.2.</span> <span class="toc-text">② forwardingTarget 转发</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#③-forwardInvocation-转发"><span class="toc-number">4.0.1.3.</span> <span class="toc-text">③ forwardInvocation 转发</span></a></li></ol></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Background-or-Question"><span class="toc-number">1.</span> <span class="toc-text">Background or Question</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#how"><span class="toc-number">2.</span> <span class="toc-text">how</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#根据消息发送、转发的流程，大概有以下三种方法"><span class="toc-number">2.0.1.</span> <span class="toc-text">根据消息发送、转发的流程，大概有以下三种方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#①-在分类中重写resolveInstanceMethod-动态添加方法"><span class="toc-number">2.0.1.1.</span> <span class="toc-text">① 在分类中重写resolveInstanceMethod 动态添加方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#②-forwardingTarget-转发"><span class="toc-number">2.0.1.2.</span> <span class="toc-text">② forwardingTarget 转发</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#③-forwardInvocation-转发"><span class="toc-number">2.0.1.3.</span> <span class="toc-text">③ forwardInvocation 转发</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#我的困惑"><span class="toc-number">3.</span> <span class="toc-text">我的困惑</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -791,6 +798,10 @@ top:50vh;
   </div>
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="objc"><span class="iconfont-archer">&#xe606;</span>objc</span>
+    
+        <span class="sidebar-tag-name" data-tags="project"><span class="iconfont-archer">&#xe606;</span>project</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
