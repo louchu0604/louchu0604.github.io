@@ -364,7 +364,8 @@ height:50vh;
                 <span>对象的引用计数是如何管理的</span>
         </a>
         <div class="abstract-content">
-            Question
+            Question## 
+
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -391,10 +392,10 @@ height:50vh;
 使用场景我们常用锁来避免多线程引起的资源竞争等问题
 definitions wikipedia
 临界区:一块对公共资源进行访问的代码，并非一种机制或是算法
-自旋锁(spinlock):do while 忙等待 优点是避免了上下文调度开销 缺点是耗CPU 只适合段时间的任务
-互斥锁(mutexlock) 休眠状态等锁
+自旋锁(spin lock):spin 顾名思义，do while 忙等待 优点是避免了上下文调度开销 缺点是耗CPU 只适合段时间的任务
+互斥锁(mutex lock) 休眠状态等锁
 读写锁(rwlock)： 处于“写锁”时任何操作都要休眠等锁
-递归锁(recursivelock)：是互斥锁的一个特例 允许同一个线程在未释放拥有的锁时反复对该锁进行加锁操作...
+递归锁(recursive lock)：是互斥锁的一个特例 允许同一个线程在未释放拥有的...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
