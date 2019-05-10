@@ -346,51 +346,6 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href="/2019/05/06/对象的引用计数是如何管理的/">
-            
-                <span>对象的引用计数是如何管理的</span>
-        </a>
-        <div class="abstract-content">
-            问题
-iOS如何管理内存
-对象的引用计数是如何管理的 
-对象的引用计数保存在哪里
-对象的引用计数是如何修改的iOS采用自动释放池技术和ARC技术管理堆内存
-
-ARCARC的全称是AutoReleaseConference自动引用计数 区别于MRC,程序员不需要手动释放，
-对于实例变量，编译器会在合适的位置插入内存管理语句
-对于临时变量，采用自动释放池技术管理对象的引用计数
-
-
-
-
-
-autoreleasepool   autoreleasepool也就是前文提到的自动释放池技术，详情可参考自动释放池的原理
-管理对象的引用计数问题对象的生命周期
-生成&amp;持有对象（rc+1）objc ...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/05/06</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="objc iOS OC">objc iOS OC</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
         <a class="abstract-title" href="/2019/04/28/锁/">
             
                 <span>锁</span>
@@ -409,6 +364,71 @@ definitions wikipedia
             <!-- date  -->
             <div class="abstract-date">
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/28</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="iOS">iOS</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2018/11/26/iOS事件响应链/">
+            
+                <span>iOS事件响应链</span>
+        </a>
+        <div class="abstract-content">
+            触摸事件的响应机制：
+
+系统检测到触摸等事件后，会将事件打包成UIEvent对象发给当前活动的APP的事件队列。
+UIApplication会从事件队列中取出事件并传递给UIWindow
+UIWindow会使用hitTest:withEvent:方法寻找此次Touch操作初始点所在的视图(View) 
+hitTest:withEvent:会在当前视图上调用pointInside:withEvent:方法判断触摸点是否在当前视图内。若返回NO则hitTest:withEvent:返回nil，若返回YES则向当前视图的所有subviews发送hitTest:withEvent:直到有子视图...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="iOS">iOS</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2018/11/26/app启动过程/">
+            
+                <span>app启动过程</span>
+        </a>
+        <div class="abstract-content">
+            最开始的时候呢，是看了sunny的博客：http://blog.sunnyxx.com/2014/08/30/objc-pre-main/和mike ash的博客：https://www.mikeash.com/pyblog/friday-qa-2012-11-09-dyld-dynamic-linking-on-os-x.html但是没看过源码一头雾水的，所以花了周末的时间，看了源码。下面的是我的一些总结，也算是题纲。然后我的草稿也继续保留。刚开始写博客，希望思路会越来越好。引自sunny的博客
+
+dyld（the dynamic link editor），Apple 的动态链接器，系...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
             </div>
             <!-- tags  -->
             

@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1k</span>阅读时长: <span class="post-count reading-time">3 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">1.1k</span>阅读时长: <span class="post-count reading-time">3 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -401,18 +401,21 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>确切地说是目前采用的方案。</p>
-<h1 id="why"><a href="#why" class="headerlink" title="why"></a>why</h1><ol>
+        <ul>
+<li>确切地说是我目前采用的方案。</li>
+<li>有更新会po到笔记中来<h1 id="为什么要做用户轨迹追踪"><a href="#为什么要做用户轨迹追踪" class="headerlink" title="为什么要做用户轨迹追踪"></a>为什么要做用户轨迹追踪</h1></li>
+</ul>
+<ol>
 <li>快速定位用户反馈的问题</li>
 <li>运营可自定义追踪行为，方便研究</li>
 <li>为产品定位做更多的参考</li>
 </ol>
-<h1 id="what"><a href="#what" class="headerlink" title="what"></a>what</h1><ol>
+<h1 id="期待达到的效果"><a href="#期待达到的效果" class="headerlink" title="期待达到的效果"></a>期待达到的效果</h1><ol>
 <li>追踪代码和业务代码分离</li>
 <li>抽离出来作为其他项目的Kit使用</li>
 <li>根据后台动态下发的文件追踪相应的页面、事件,并根据设置确定日志上传时机</li>
 </ol>
-<h1 id="how"><a href="#how" class="headerlink" title="how"></a>how</h1><h2 id="1-追踪页面轨迹"><a href="#1-追踪页面轨迹" class="headerlink" title="1. 追踪页面轨迹"></a>1. 追踪页面轨迹</h2><p>   主要借助nav的api </p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><h2 id="1-追踪页面轨迹"><a href="#1-追踪页面轨迹" class="headerlink" title="1. 追踪页面轨迹"></a>1. 追踪页面轨迹</h2><p>   主要借助nav的api </p>
 <p>   记下push\popset\present\dismiss的日志<br>   对于每个一vc用地址、className来标记，前者用来标记vc数组，后者用来匹配路径</p>
 <p>对于有tab的app，记录下当前的tab页很重要。<br>我采用的方法是，hook住<code>funname</code>、<code>funname</code>记录下tabName或者tabIndex，后者只有在代码主动设置<code>selectedIndex</code>的才会调用，前者会在用户点击<code>tabItem</code>的时候响应。对于后者，我们可以取index做标记；对于前者，我们可以取itemName做标记，因此如果对追踪路径有要求，有两个方式。</p>
 <ul>
@@ -470,7 +473,7 @@ height:50vh;
 <li>tableView 等点击事件<br>要hooktableView的delegate、以及delegate相应的sel方法。<br>也就是要给业务类写分类了。。我并不十分想这么干。。。。<br>然而除此以外，<br>我没有想出特别好的办法。卒。</li>
 </ul>
 <h2 id="3-日志"><a href="#3-日志" class="headerlink" title="3. 日志"></a>3. 日志</h2><p>日志记录格式：<br>时间– 路径名-<br>        响应视图（视图标志）<br>        响应视图（视图标志）<br>        响应视图（视图标志）<br>       …..<br>时间– 路径名-<br>        响应视图（视图标志）<br>        响应视图（视图标志）<br>        响应视图（视图标志）<br>       …..<br>实时写入本地的txt文件中<br>上传策略由配置文件来决定</p>
-<h2 id="4-test"><a href="#4-test" class="headerlink" title="4. test"></a>4. test</h2><h2 id="5-improve"><a href="#5-improve" class="headerlink" title="5. improve"></a>5. improve</h2><p>  tableView等cell上的点击事件我还要继续找寻更好的方法</p>
+<h2 id="4"><a href="#4" class="headerlink" title="4."></a>4.</h2><h2 id="5-improve"><a href="#5-improve" class="headerlink" title="5. improve"></a>5. improve</h2><p>  tableView等cell上的点击事件我还要继续找寻更好的方法</p>
 <p>ps.虽然现在用户真的很少，有些东西可研究可不研究，可做可不做，但是想到了不去做，就是觉得todo list越来越长很想去完成啊<br>源码可以在我的github上，Pie这个项目里找到【不一定更新了】</p>
 
     </article>
@@ -609,7 +612,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#why"><span class="toc-number">1.</span> <span class="toc-text">why</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#what"><span class="toc-number">2.</span> <span class="toc-text">what</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#how"><span class="toc-number">3.</span> <span class="toc-text">how</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-追踪页面轨迹"><span class="toc-number">3.1.</span> <span class="toc-text">1. 追踪页面轨迹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-追踪点击事件"><span class="toc-number">3.2.</span> <span class="toc-text">2. 追踪点击事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-日志"><span class="toc-number">3.3.</span> <span class="toc-text">3. 日志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-test"><span class="toc-number">3.4.</span> <span class="toc-text">4. test</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-improve"><span class="toc-number">3.5.</span> <span class="toc-text">5. improve</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#为什么要做用户轨迹追踪"><span class="toc-number">1.</span> <span class="toc-text">为什么要做用户轨迹追踪</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#期待达到的效果"><span class="toc-number">2.</span> <span class="toc-text">期待达到的效果</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#思路"><span class="toc-number">3.</span> <span class="toc-text">思路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-追踪页面轨迹"><span class="toc-number">3.1.</span> <span class="toc-text">1. 追踪页面轨迹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-追踪点击事件"><span class="toc-number">3.2.</span> <span class="toc-text">2. 追踪点击事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-日志"><span class="toc-number">3.3.</span> <span class="toc-text">3. 日志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4"><span class="toc-number">3.4.</span> <span class="toc-text">4.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-improve"><span class="toc-number">3.5.</span> <span class="toc-text">5. improve</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -879,6 +882,10 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="objc"><span class="iconfont-archer">&#xe606;</span>objc</span>
     
         <span class="sidebar-tag-name" data-tags="project"><span class="iconfont-archer">&#xe606;</span>project</span>
+    
+        <span class="sidebar-tag-name" data-tags="objc iOS OC"><span class="iconfont-archer">&#xe606;</span>objc iOS OC</span>
+    
+        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

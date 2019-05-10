@@ -351,8 +351,23 @@
                 <span>对象的引用计数是如何管理的</span>
         </a>
         <div class="abstract-content">
-            Question## 
+            问题
+iOS如何管理内存
+对象的引用计数是如何管理的 
+对象的引用计数保存在哪里
+对象的引用计数是如何修改的iOS采用自动释放池技术和ARC技术管理堆内存
 
+ARCARC的全称是AutoReleaseConference自动引用计数 区别于MRC,程序员不需要手动释放，
+对于实例变量，编译器会在合适的位置插入内存管理语句
+对于临时变量，采用自动释放池技术管理对象的引用计数
+
+
+
+
+
+autoreleasepool   autoreleasepool也就是前文提到的自动释放池技术，详情可参考自动释放池的原理
+管理对象的引用计数问题对象的生命周期
+生成&amp;持有对象（rc+1）objc ...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -360,6 +375,12 @@
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/05/06</span>
             </div>
             <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="objc iOS OC">objc iOS OC</a>
+    
+</div>
             
         </div>
     </article>
@@ -718,6 +739,10 @@
         <span class="sidebar-tag-name" data-tags="objc"><span class="iconfont-archer">&#xe606;</span>objc</span>
     
         <span class="sidebar-tag-name" data-tags="project"><span class="iconfont-archer">&#xe606;</span>project</span>
+    
+        <span class="sidebar-tag-name" data-tags="objc iOS OC"><span class="iconfont-archer">&#xe606;</span>objc iOS OC</span>
+    
+        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

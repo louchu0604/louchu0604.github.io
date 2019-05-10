@@ -391,30 +391,129 @@ autoreleasepool   autoreleasepool也就是前文提到的自动释放池技术�
     
     
     <article class="index-post">
-        <a class="abstract-title" href="/2019/04/28/锁/">
+        <a class="abstract-title" href="/2018/11/26/weak/">
             
-                <span>锁</span>
+                <span>weak</span>
         </a>
         <div class="abstract-content">
-            什么是锁锁是保证线程安全的手段，保证临界区的代码同一时间只能有一个线程执行，使得类的行为和规范一致。
-使用场景我们常用锁来避免多线程引起的资源竞争等问题
-definitions wikipedia
-临界区:一块对公共资源进行访问的代码，并非一种机制或是算法
-自旋锁(spin lock):spin 顾名思义，do while 忙等待 优点是避免了上下文调度开销 缺点是耗CPU 只适合段时间的任务
-互斥锁(mutex lock) 休眠状态等锁
-读写锁(rwlock)： 处于“写锁”时任何操作都要休眠等锁
-递归锁(recursive lock)：是互斥锁的一个特例 允许同一个线程在未释放拥有的...
+            why一般情况下，weak修饰对象，assign修饰基本数据类型。
+
+weak和assign，并不会增加对象的rc
+assign修饰的对象，出栈后，对象所指向的内存块极有可能被回收，如果此时再访问指针，会出现野指针的情况
+weak修饰的对象，因为weak所修饰的对象被系统回收之后，指针会被置为nil，不会出现也指针
+
+下面会从源码中一探究竟。（源码的版本是objc4-723）weak 源码源码中出现的数据结构
+SideTables
+
+123static StripedMap&lt;SideTable&gt;&amp; SideTables() &#123;    return *rei...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/28</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
             </div>
             <!-- tags  -->
             
             <div class="abstract-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="iOS">iOS</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="objc iOS OC">objc iOS OC</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2018/11/26/catogory的几个问题/">
+            
+                <span>关于catogory的几个问题</span>
+        </a>
+        <div class="abstract-content">
+            先介绍分类：分类可以为已经存在的类添加方法，还可以把类的实现分在几个不同的文件里。Q1：下面这段话摘自美团点评的文章：
+
+
+
+category是无法添加实例变量的（因为在运行期，对象的内存布局已经确定，如果添加实例变量就会破坏类的内部布局，这对编译型语言来说是灾难性的）我们可以在objc的源码中看到category的结构，如下：12345678typedef struct category_t &#123;    const char *name;// 类名    classref_t cls;// 要扩展的类对象    struct method_list_t *instanceMet...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="objc iOS OC">objc iOS OC</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2018/11/26/自动释放池的原理/">
+            
+                <span>自动释放池的原理</span>
+        </a>
+        <div class="abstract-content">
+            背景前文提到了weak修饰对象原理。对于iOS如何管理内存的释放销毁，还需要知道自动释放池技术，故本文会在源码的基础上讨论。
+autoreleasepool总结：
+ARC下，非alloc/new/copy/mutableCopy开头的类方法默认返回的是autoreleased对象，编译器会自动插入相关的autorelease语句
+主线程的runloop进入时（entry），其回调内会调用 _objc_autoreleasePoolPush() 创建自动释放池。
+准备进入休眠(BeforeWaiting) 时调用_objc_autoreleasePoolPop() 和 _objc_auto...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="objc iOS OC">objc iOS OC</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2018/11/26/深入比较strong和copy两种修饰符/">
+            
+                <span>深入比较strong和copy两种修饰符</span>
+        </a>
+        <div class="abstract-content">
+            strong和copy是property的两个基本修饰符，在oc中，一般情况下用来修饰对象。strong：property的默认修饰符。copy：一般用来修饰拥有可变类型的对象。比如NSString NSDictionary NSArray.在学习oc的过程中，大多数的资料里都提到了以上两点，却没有详细说明这么做的原因。本文旨在oc底层实现的基础上探讨以上两点的原因和合理性。
+tip：对象的RC如何实现+1 和-1 请看对象的引用计数是如何管理的
+一、strong和copy的不同、以及为什么NSString等对象一般用copy来修饰？对象使用strong和copy修饰后，都可以让对象的...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="objc iOS OC">objc iOS OC</a>
     
 </div>
             

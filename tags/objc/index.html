@@ -346,110 +346,6 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href="/2018/11/26/weak/">
-            
-                <span>weak</span>
-        </a>
-        <div class="abstract-content">
-            why一般情况下，weak修饰对象，assign修饰基本数据类型。
-
-weak和assign，并不会增加对象的rc
-assign修饰的对象，出栈后，对象所指向的内存块极有可能被回收，如果此时再访问指针，会出现野指针的情况
-weak修饰的对象，因为weak所修饰的对象被系统回收之后，指针会被置为nil，不会出现也指针
-
-下面会从源码中一探究竟。（源码的版本是objc4-723）weak 源码源码中出现的数据结构
-SideTables
-
-123static StripedMap&lt;SideTable&gt;&amp; SideTables() &#123;    return *rei...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="objc">objc</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2018/11/26/catogory的几个问题/">
-            
-                <span>关于catogory的几个问题</span>
-        </a>
-        <div class="abstract-content">
-            先介绍分类：分类可以为已经存在的类添加方法，还可以把类的实现分在几个不同的文件里。Q1：下面这段话摘自美团点评的文章：
-
-
-
-category是无法添加实例变量的（因为在运行期，对象的内存布局已经确定，如果添加实例变量就会破坏类的内部布局，这对编译型语言来说是灾难性的）我们可以在objc的源码中看到category的结构，如下：12345678typedef struct category_t &#123;    const char *name;// 类名    classref_t cls;// 要扩展的类对象    struct method_list_t *instanceMet...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="objc">objc</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2018/11/26/自动释放池的原理/">
-            
-                <span>自动释放池的原理</span>
-        </a>
-        <div class="abstract-content">
-            背景前文提到了weak修饰对象原理。对于iOS如何管理内存的释放销毁，还需要知道自动释放池技术，故本文会在源码的基础上讨论。
-autoreleasepool总结：
-ARC下，非alloc/new/copy/mutableCopy开头的类方法默认返回的是autoreleased对象，编译器会自动插入相关的autorelease语句
-主线程的runloop进入时（entry），其回调内会调用 _objc_autoreleasePoolPush() 创建自动释放池。
-准备进入休眠(BeforeWaiting) 时调用_objc_autoreleasePoolPop() 和 _objc_auto...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="objc">objc</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
         <a class="abstract-title" href="/2018/11/26/消息转发/">
             
                 <span>消息转发</span>
@@ -457,43 +353,13 @@ ARC下，非alloc/new/copy/mutableCopy开头的类方法默认返回的是autore
         <div class="abstract-content">
             Background or Question
 一般给对象的属性赋值主要有两种方式， _var=newValue 和 objc.var = newValue，大家都知道前者效率高，后者效率低
-开发的过程中，引起APP奔溃的叫常见的一个场景是unRecognizedSelector，顾名思义是无法识别的方法or选择子
+开发的过程中，引起APP奔溃的叫常见的一个场景是unrecognizedSelector，顾名思义是无法识别的方法or选择子
 经常会有人问一个很宏观的问题：你是如何理解runtime的，我觉得runtime 有两个角度可以解释
 
 
 一套用c实现的底层API 源码可以在apple的source library里下载
 一种动态运行机制
 在iOS中，程序运行时调用的方法【or 消息】并不是编译时期就确定下来...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="objc">objc</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2018/11/26/深入比较strong和copy两种修饰符/">
-            
-                <span>深入比较strong和copy两种修饰符</span>
-        </a>
-        <div class="abstract-content">
-            strong和copy是property的两个基本修饰符，在oc中，一般情况下用来修饰对象。strong：property的默认修饰符。copy：一般用来修饰拥有可变类型的对象。比如NSString NSDictionary NSArray.在学习oc的过程中，大多数的资料里都提到了以上两点，却没有详细说明这么做的原因。本文旨在oc底层实现的基础上探讨以上两点的原因和合理性。
-一、strong和copy的不同、以及为什么NSString等对象一般用copy来修饰？对象使用strong和copy修饰后，都可以让对象的RC＋1。其不同点可以看一下代码。123456789101112@pro...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -865,6 +731,10 @@ ARC下，非alloc/new/copy/mutableCopy开头的类方法默认返回的是autore
         <span class="sidebar-tag-name" data-tags="objc"><span class="iconfont-archer">&#xe606;</span>objc</span>
     
         <span class="sidebar-tag-name" data-tags="project"><span class="iconfont-archer">&#xe606;</span>project</span>
+    
+        <span class="sidebar-tag-name" data-tags="objc iOS OC"><span class="iconfont-archer">&#xe606;</span>objc iOS OC</span>
+    
+        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

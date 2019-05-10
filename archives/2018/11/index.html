@@ -371,7 +371,7 @@ SideTables
             
             <div class="abstract-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="objc">objc</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="objc iOS OC">objc iOS OC</a>
     
 </div>
             
@@ -403,6 +403,12 @@ hitTest:withEvent:会在当前视图上调用pointInside:withEvent:方法判断�
             </div>
             <!-- tags  -->
             
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="iOS">iOS</a>
+    
+</div>
+            
         </div>
     </article>
     
@@ -432,7 +438,7 @@ category是无法添加实例变量的（因为在运行期，对象的内存布
             
             <div class="abstract-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="objc">objc</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="objc iOS OC">objc iOS OC</a>
     
 </div>
             
@@ -461,6 +467,12 @@ dyld（the dynamic link editor），Apple 的动态链接器，系...
             </div>
             <!-- tags  -->
             
+            <div class="abstract-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="iOS">iOS</a>
+    
+</div>
+            
         </div>
     </article>
     
@@ -475,20 +487,23 @@ dyld（the dynamic link editor），Apple 的动态链接器，系...
                 <span>做用户轨迹追踪时的思考</span>
         </a>
         <div class="abstract-content">
-            确切地说是目前采用的方案。
-why
+            
+确切地说是我目前采用的方案。
+有更新会po到笔记中来为什么要做用户轨迹追踪
+
+
 快速定位用户反馈的问题
 运营可自定义追踪行为，方便研究
 为产品定位做更多的参考
 
-what
+期待达到的效果
 追踪代码和业务代码分离
 抽离出来作为其他项目的Kit使用
 根据后台动态下发的文件追踪相应的页面、事件,并根据设置确定日志上传时机
 
-how1. 追踪页面轨迹   主要借助nav的api 
+思路1. 追踪页面轨迹   主要借助nav的api 
    记下push\popset\present\dismiss的日志   对于每个一vc用地址、className来标记，前者用来标记vc数组，后者用来匹配路径
-对于有tab的app，记录下当前的tab页很重要。我采用的方法是，hook住funname、funname记录下t...
+对于有tab的app，记录下当前的tab页很重要。我采用的方法是...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -532,7 +547,7 @@ ARC下，非alloc/new/copy/mutableCopy开头的类方法默认返回的是autore
             
             <div class="abstract-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="objc">objc</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="objc iOS OC">objc iOS OC</a>
     
 </div>
             
@@ -552,7 +567,7 @@ ARC下，非alloc/new/copy/mutableCopy开头的类方法默认返回的是autore
         <div class="abstract-content">
             Background or Question
 一般给对象的属性赋值主要有两种方式， _var=newValue 和 objc.var = newValue，大家都知道前者效率高，后者效率低
-开发的过程中，引起APP奔溃的叫常见的一个场景是unRecognizedSelector，顾名思义是无法识别的方法or选择子
+开发的过程中，引起APP奔溃的叫常见的一个场景是unrecognizedSelector，顾名思义是无法识别的方法or选择子
 经常会有人问一个很宏观的问题：你是如何理解runtime的，我觉得runtime 有两个角度可以解释
 
 
@@ -588,7 +603,8 @@ ARC下，非alloc/new/copy/mutableCopy开头的类方法默认返回的是autore
         </a>
         <div class="abstract-content">
             strong和copy是property的两个基本修饰符，在oc中，一般情况下用来修饰对象。strong：property的默认修饰符。copy：一般用来修饰拥有可变类型的对象。比如NSString NSDictionary NSArray.在学习oc的过程中，大多数的资料里都提到了以上两点，却没有详细说明这么做的原因。本文旨在oc底层实现的基础上探讨以上两点的原因和合理性。
-一、strong和copy的不同、以及为什么NSString等对象一般用copy来修饰？对象使用strong和copy修饰后，都可以让对象的RC＋1。其不同点可以看一下代码。123456789101112@pro...
+tip：对象的RC如何实现+1 和-1 请看对象的引用计数是如何管理的
+一、strong和copy的不同、以及为什么NSString等对象一般用copy来修饰？对象使用strong和copy修饰后，都可以让对象的...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -599,7 +615,7 @@ ARC下，非alloc/new/copy/mutableCopy开头的类方法默认返回的是autore
             
             <div class="abstract-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="objc">objc</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="objc iOS OC">objc iOS OC</a>
     
 </div>
             
@@ -1038,6 +1054,10 @@ extern varName代表的是varName是调用外部声明的变量
         <span class="sidebar-tag-name" data-tags="objc"><span class="iconfont-archer">&#xe606;</span>objc</span>
     
         <span class="sidebar-tag-name" data-tags="project"><span class="iconfont-archer">&#xe606;</span>project</span>
+    
+        <span class="sidebar-tag-name" data-tags="objc iOS OC"><span class="iconfont-archer">&#xe606;</span>objc iOS OC</span>
+    
+        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
