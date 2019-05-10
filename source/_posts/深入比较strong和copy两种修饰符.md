@@ -1,7 +1,7 @@
 ---
 title: 深入比较strong和copy两种修饰符
 date: 2018-11-26 00:48:10
-tags: objc
+tags: objc iOS OC
 ---
 strong和copy是property的两个基本修饰符，在oc中，一般情况下用来修饰对象。
 strong：property的默认修饰符。
@@ -9,8 +9,11 @@ copy：一般用来修饰拥有可变类型的对象。比如NSString NSDictiona
 在学习oc的过程中，大多数的资料里都提到了以上两点，却没有详细说明这么做的原因。
 本文旨在oc底层实现的基础上探讨以上两点的原因和合理性。
 
+tip：对象的RC如何实现+1 和-1 请看[对象的引用计数是如何管理的](http://blog.kaolagogogo.fun/2019/05/06/%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E6%98%AF%E5%A6%82%E4%BD%95%E7%AE%A1%E7%90%86%E7%9A%84/)
+
 一、strong和copy的不同、以及为什么NSString等对象一般用copy来修饰？
 对象使用strong和copy修饰后，都可以让对象的RC＋1。其不同点可以看一下代码。
+
 ```objc
 
 @property (nonatomic,strong) id objStrong;

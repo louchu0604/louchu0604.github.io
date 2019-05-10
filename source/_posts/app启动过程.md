@@ -1,7 +1,7 @@
 ---
 title: app启动过程
 date: 2018-11-26 00:50:28
-tags:
+tags: iOS 
 ---
 
 
