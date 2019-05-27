@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">481</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">652</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -401,7 +401,8 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>先介绍分类：<br>分类可以为已经存在的类添加方法，还可以把类的实现分在几个不同的文件里。<br>Q1：<br>下面这段话摘自美团点评的文章：</p>
+        <p>先介绍分类：<br>分类可以为已经存在的类添加方法，还可以把类的实现分在几个不同的文件里。</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="分类可以添加属性吗？"><a href="#分类可以添加属性吗？" class="headerlink" title="分类可以添加属性吗？"></a>分类可以添加属性吗？</h2><h2 id="分类可以添加实例变量吗？"><a href="#分类可以添加实例变量吗？" class="headerlink" title="分类可以添加实例变量吗？"></a>分类可以添加实例变量吗？</h2><h2 id="分类方法会覆盖原来的类方法？"><a href="#分类方法会覆盖原来的类方法？" class="headerlink" title="分类方法会覆盖原来的类方法？"></a>分类方法会覆盖原来的类方法？</h2><h1 id="回答与解释"><a href="#回答与解释" class="headerlink" title="回答与解释"></a>回答与解释</h1><p>##Q1&amp;Q2：<br>下面这段话摘自美团点评的文章：</p>
 <blockquote>
 <blockquote>
 <blockquote>
@@ -409,10 +410,12 @@ height:50vh;
 </blockquote>
 </blockquote>
 </blockquote>
-<p>从结构中可以知道，分类可以添加实例方法、类方法、协议、属性，但是无法添加实例变量。</p>
-<p>Q2：<br>为什么分类方法会覆盖原来的类方法</p>
+<ul>
+<li>从结构中可以知道，分类可以添加实例方法、类方法、协议、属性，但是无法添加实例变量。</li>
+<li>那为什么很多博客中都说，分类无法添加属性？<br>我们现在通常说的属性property，默认=ivar+getter+setter，不妨在分类中试着添加一个属性，并在运行的时候调用点语法或者getter、setter方法，一般情况下会出现<code>unrecognizedSelector</code>错误，也就是说，找不到getter、setter方法、换言之：这里并没有自动生成getter、setter方法，这也是很多博客中说可以用关联对象技术添加属性的背景。</li>
+</ul>
+<p>##Q3：<br>为什么分类方法会覆盖原来的类方法</p>
 <h1 id="先问是不是，再问为什么"><a href="#先问是不是，再问为什么" class="headerlink" title="先问是不是，再问为什么"></a>先问是不是，再问为什么</h1><h3 id="首先答案是NO-验证方法很简单，打印出方法列表，会发现原来的类方法还在，所谓的覆盖指的是“分类中的方法在方法查找时会先于原来的类方法被命中”"><a href="#首先答案是NO-验证方法很简单，打印出方法列表，会发现原来的类方法还在，所谓的覆盖指的是“分类中的方法在方法查找时会先于原来的类方法被命中”" class="headerlink" title="首先答案是NO 验证方法很简单，打印出方法列表，会发现原来的类方法还在，所谓的覆盖指的是“分类中的方法在方法查找时会先于原来的类方法被命中”"></a>首先答案是NO 验证方法很简单，打印出方法列表，会发现原来的类方法还在，所谓的覆盖指的是“分类中的方法在方法查找时会先于原来的类方法被命中”</h3><p>###为什么呢？<br>运行时 遍历各个分类中的方法【listA】与原来类的方法【listB】然后组成一个大的方法列表newlist，A在前，B在后，如果listA与listB中都有一个methodA，那么在方法查找时，排在newlist前的分类方法会先被找到，就会让调用者产生“原来的类方法被分类方法覆盖之感”<br>以此可推，如果在实际应用中我们想要调用“被覆盖的方法”，可以获取类的方法列表，从后往前遍历，找到要调用的方法即可【或者从前往后遍历，获取同名的方法列表，然后取出最后一个】</p>
-<p>Q3：</p>
 
     </article>
     <!-- license  -->
@@ -550,7 +553,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#先问是不是，再问为什么"><span class="toc-number">1.</span> <span class="toc-text">先问是不是，再问为什么</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#首先答案是NO-验证方法很简单，打印出方法列表，会发现原来的类方法还在，所谓的覆盖指的是“分类中的方法在方法查找时会先于原来的类方法被命中”"><span class="toc-number">1.0.1.</span> <span class="toc-text">首先答案是NO 验证方法很简单，打印出方法列表，会发现原来的类方法还在，所谓的覆盖指的是“分类中的方法在方法查找时会先于原来的类方法被命中”</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#问题"><span class="toc-number">1.</span> <span class="toc-text">问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分类可以添加属性吗？"><span class="toc-number">1.1.</span> <span class="toc-text">分类可以添加属性吗？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分类可以添加实例变量吗？"><span class="toc-number">1.2.</span> <span class="toc-text">分类可以添加实例变量吗？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分类方法会覆盖原来的类方法？"><span class="toc-number">1.3.</span> <span class="toc-text">分类方法会覆盖原来的类方法？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#回答与解释"><span class="toc-number">2.</span> <span class="toc-text">回答与解释</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#先问是不是，再问为什么"><span class="toc-number">3.</span> <span class="toc-text">先问是不是，再问为什么</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#首先答案是NO-验证方法很简单，打印出方法列表，会发现原来的类方法还在，所谓的覆盖指的是“分类中的方法在方法查找时会先于原来的类方法被命中”"><span class="toc-number">3.0.1.</span> <span class="toc-text">首先答案是NO 验证方法很简单，打印出方法列表，会发现原来的类方法还在，所谓的覆盖指的是“分类中的方法在方法查找时会先于原来的类方法被命中”</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>

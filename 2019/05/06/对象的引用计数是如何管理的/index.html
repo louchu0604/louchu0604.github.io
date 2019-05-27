@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">323</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">345</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -402,11 +402,16 @@ height:50vh;
             <main class="main post-page">
     <article class="article-entry">
         <h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><ol>
-<li>iOS如何管理内存</li>
+<li>iOS如何管理内存<!-- 如果管理内存 先回答内存分区 我们管理的是哪块区域 ；然后回答我们采用什么方案进行内存管理：我们采用的ARC 使用了自动释放池技术  --></li>
 <li>对象的引用计数是如何管理的 <ul>
 <li>对象的引用计数保存在哪里</li>
 <li>对象的引用计数是如何修改的<br>iOS采用自动释放池技术和ARC技术管理堆内存<!-- 此处解释app的内存分区 插入图片  -->
-<!-- 如何管理堆上的内存 -->
+iOS内存分区</li>
+<li>栈区：</li>
+<li>堆区：</li>
+<li>全局区：</li>
+<li>文字常量区</li>
+<li>程序代码区<!-- 如何管理堆上的内存 -->
 <h2 id="ARC"><a href="#ARC" class="headerlink" title="ARC"></a>ARC</h2>ARC的全称是AutoReleaseConference自动引用计数 区别于MRC,程序员不需要手动释放，<ul>
 <li>对于实例变量，编译器会在合适的位置插入内存管理语句</li>
 <li>对于临时变量，采用自动释放池技术管理对象的引用计数</li>
@@ -424,9 +429,12 @@ height:50vh;
 </li>
 <li><p>前面提到的关于引用计数的主要问题是：<code>对象的引用计数保存在哪里</code>和<code>对象的引用计数是如何修改的</code><br>查看objc的源码(我的版本是723，现在有<a href="https://opensource.apple.com/source/objc4/" target="_blank" rel="noopener">更新的</a>)</p>
 </li>
-<li>找到对象生成、持有、释放时候调用的api<h4 id="生成-amp-持有对象"><a href="#生成-amp-持有对象" class="headerlink" title="生成&amp;持有对象"></a>生成&amp;持有对象</h4></li>
+<li>找到对象生成、持有、释放时候调用的api<h4 id="生成-amp-持有对象"><a href="#生成-amp-持有对象" class="headerlink" title="生成&amp;持有对象"></a>生成&amp;持有对象</h4><!-- 此处插入函数调用栈 重点解释1. 第一次生成的时候修改了什么地方. -->
+</li>
 </ul>
-<h4 id="持有对象-retain"><a href="#持有对象-retain" class="headerlink" title="持有对象 retain"></a>持有对象 retain</h4><h4 id="释放对象-release"><a href="#释放对象-release" class="headerlink" title="释放对象 release"></a>释放对象 release</h4><h3 id="总结一下"><a href="#总结一下" class="headerlink" title="总结一下"></a>总结一下</h3>
+<h4 id="持有对象-retain"><a href="#持有对象-retain" class="headerlink" title="持有对象 retain"></a>持有对象 retain</h4><!-- 此处 重点解释2. 非生成的时候，rc修改是在什么地方进行修改的 （有两种情况） 2. 每次都是加一吗？是的话 为什么 不是的话 为什么 -->
+<h4 id="释放对象-release"><a href="#释放对象-release" class="headerlink" title="释放对象 release"></a>释放对象 release</h4><!-- 与持有对象类似，rc修改是在什么地方修改的 每次都是减一吗 是的话 为什么 不是的话 为什么  -->
+<h3 id="总结一下"><a href="#总结一下" class="headerlink" title="总结一下"></a>总结一下</h3>
     </article>
     <!-- license  -->
     

@@ -356,7 +356,12 @@ iOS如何管理内存
 对象的引用计数是如何管理的 
 对象的引用计数保存在哪里
 对象的引用计数是如何修改的iOS采用自动释放池技术和ARC技术管理堆内存
-
+iOS内存分区
+栈区：
+堆区：
+全局区：
+文字常量区
+程序代码区
 ARCARC的全称是AutoReleaseConference自动引用计数 区别于MRC,程序员不需要手动释放，
 对于实例变量，编译器会在合适的位置插入内存管理语句
 对于临时变量，采用自动释放池技术管理对象的引用计数
@@ -366,8 +371,7 @@ ARCARC的全称是AutoReleaseConference自动引用计数 区别于MRC,程序员
 
 
 autoreleasepool   autoreleasepool也就是前文提到的自动释放池技术，详情可参考自动释放池的原理
-管理对象的引用计数问题对象的生命周期
-生成&amp;持有对象（rc+1）objc ...
+管理对象的引用计数...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -504,11 +508,12 @@ hitTest:withEvent:会在当前视图上调用pointInside:withEvent:方法判断�
                 <span>关于catogory的几个问题</span>
         </a>
         <div class="abstract-content">
-            先介绍分类：分类可以为已经存在的类添加方法，还可以把类的实现分在几个不同的文件里。Q1：下面这段话摘自美团点评的文章：
+            先介绍分类：分类可以为已经存在的类添加方法，还可以把类的实现分在几个不同的文件里。
+问题分类可以添加属性吗？分类可以添加实例变量吗？分类方法会覆盖原来的类方法？回答与解释##Q1&amp;Q2：下面这段话摘自美团点评的文章：
 
 
 
-category是无法添加实例变量的（因为在运行期，对象的内存布局已经确定，如果添加实例变量就会破坏类的内部布局，这对编译型语言来说是灾难性的）我们可以在objc的源码中看到category的结构，如下：12345678typedef struct category_t &#123;    const char *name;// 类名    classref_t cls;// 要扩展的类对象    struct method_list_t *instanceMet...
+category是无法添加实例变量的（因为在运行期，对象的内存布局已经确定，如果添加实例变量就会破坏类的内部布局，这对编译型语言来说是灾难性的）我们可以在objc的源码中看到category的结构，如下：12345678typedef struct category_t &#123;    const char *name;// 类名    classref_...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
