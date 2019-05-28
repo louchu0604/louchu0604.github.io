@@ -405,8 +405,8 @@ height:50vh;
 <h1 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h1><p>我们常用锁来避免多线程引起的资源竞争等问题</p>
 <h1 id="definitions-wikipedia"><a href="#definitions-wikipedia" class="headerlink" title="definitions wikipedia"></a>definitions <a href="https://www.wikipedia.org/" target="_blank" rel="noopener">wikipedia</a></h1><ol>
 <li>临界区:一块对公共资源进行访问的代码，并非一种机制或是算法</li>
-<li>自旋锁(spin lock):<code>spin</code> 顾名思义，do while <code>忙等待</code> 优点是避免了上下文调度开销 缺点是耗CPU 只适合段时间的任务</li>
-<li>互斥锁(mutex lock) 休眠状态等锁</li>
+<li>自旋锁(spin lock):<code>spin</code> 顾名思义，do while <code>忙等待</code> 优点是避免了上下文调度开销 缺点是耗CPU 只适合短时间的任务 </li>
+<li>互斥锁(mutex lock) 休眠状态等锁 </li>
 <li>读写锁(rwlock)： 处于“写锁”时任何操作都要休眠等锁</li>
 <li>递归锁(recursive lock)：是互斥锁的一个特例 允许同一个线程在未释放拥有的锁时反复对该锁进行加锁操作</li>
 <li>信号量（semaphore） 互斥锁可以看成是semaphore在仅取值0/1时的特例。信号量更高级，可以实现更复杂的需求，不仅限于解决多线程同步问题。</li>
@@ -876,9 +876,34 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 12
+        Total : 13
         </div>
         <!-- search  -->
         
@@ -891,6 +916,11 @@ top:50vh;
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/27</span><a class="archive-post-title" href="/2019/05/27/objc源码中用到的hash算法/">objc源码中用到的hash算法</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -913,12 +943,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/设计一个合理的蓝牙框架/">设计一个合理的蓝牙框架</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/catogory的几个问题/">关于catogory的几个问题</a>
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/深入比较strong和copy两种修饰符/">深入比较strong和copy两种修饰符</a>
         </li>
     
     
@@ -933,7 +958,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/做用户轨迹追踪时的思考/">做用户轨迹追踪时的思考</a>
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/iOS事件响应链/">iOS事件响应链</a>
         </li>
     
     
@@ -943,7 +968,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/iOS事件响应链/">iOS事件响应链</a>
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/设计一个合理的蓝牙框架/">设计一个合理的蓝牙框架</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/catogory的几个问题/">关于catogory的几个问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/几种变量类型/">几种变量类型</a>
         </li>
     
     
@@ -953,12 +988,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/深入比较strong和copy两种修饰符/">深入比较strong和copy两种修饰符</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/几种变量类型/">几种变量类型</a>
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/做用户轨迹追踪时的思考/">做用户轨迹追踪时的思考</a>
         </li>
     
     </ul></div>
