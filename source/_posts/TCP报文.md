@@ -40,9 +40,9 @@ http://static.kaolagogogo.fun/blogimage/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.
 解释一下其中的几个状态
 * FIN_WAIT_1  客户端发出断开连接的请求后，等待ack回复的状态 
 * CLOSE_WAIT  服务端等待对方的断开连接请求 
-* FIN_WAIT_2   
-* LAST_ASK
-* TIME_WAIT
+* FIN_WAIT_2  等到服务端的断开请求
+* LAST_ASK 服务端发出FIN后 等待客户端的响应
+* TIME_WAIT 客户端收到服务端的FIN 发出ACK之后 等待一段时间（防止这个ACK包没有成功发送）
 
 
 
