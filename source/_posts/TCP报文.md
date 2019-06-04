@@ -8,10 +8,10 @@ tags:
 ps：TCP/IP这本书，真的有点厚，不知道什么时候能看完。
 先看一下TCP报文结构
 
-![TCP报文结构](https://cy-resource.oss-cn-shanghai.aliyuncs.com/blogimage/TCP%E6%8A%A5%E6%96%87%E7%BB%93%E6%9E%84.jpg "TCP报文结构")
+![TCP报文结构](http://static.kaolagogogo.fun/blogimage/TCP%E6%8A%A5%E6%96%87%E7%BB%93%E6%9E%84.jpg "TCP报文结构")
 <!-- 插入图片 -->
 TCP头部结构
-![TCP头部结构](https://cy-resource.oss-cn-shanghai.aliyuncs.com/blogimage/TCP%E5%A4%B4%E9%83%A8%E7%BB%93%E6%9E%84.jpg "TCP报文结构")
+![TCP头部结构](http://static.kaolagogogo.fun/blogimage/TCP%E5%A4%B4%E9%83%A8%E7%BB%93%E6%9E%84.jpg "TCP报文结构")
 
 
 <!-- 插入图片 -->
@@ -25,3 +25,26 @@ TCP头部结构
 `SYN`:建立连接
 `FIN`:关闭连接
 以上内容解释完之后，来看一下TCP为什么是`安全可靠`的
+首先是连接的过程，采用了我们耳熟能详的“三次握手”，
+请看下面这张图片
+![三次握手](
+http://static.kaolagogogo.fun/blogimage/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.jpg "三次握手")
+解释一下其中的几个状态: 
+* SYN-SENT:客户端在发送一个连接请求之后，收到应答之前的状态
+* SYN-RECEIVED (SYN_RCVD)：服务端在接收到一个连接请求和发送一个链接请求之后，收到应答之前的状态
+第一次和第二次握手可以保证客户端向服务端发送数据是可靠的
+第二次和第三次握手可以保证服务端向客户端发送数据是可靠的
+
+断开连接过程，采用的是“四次挥手”
+![四次挥手](http://static.kaolagogogo.fun/blogimage/TCP%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.jpg "四次挥手")
+解释一下其中的几个状态
+* FIN_WAIT_1  客户端发出断开连接的请求后，等待ack回复的状态 
+* CLOSE_WAIT  服务端等待对方的断开连接请求 
+* FIN_WAIT_2   
+* LAST_ASK
+* TIME_WAIT
+
+
+
+流量控制
+拥塞控制
