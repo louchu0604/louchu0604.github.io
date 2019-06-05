@@ -346,18 +346,47 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href="/2019/05/27/objc源码中用到的hash算法/">
+        <a class="abstract-title" href="/2019/06/03/用户轨迹追踪优化思路/">
             
-                <span>objc源码中用到的hash算法</span>
+                <span>用户轨迹追踪优化思路</span>
         </a>
         <div class="abstract-content">
-            源码中很多地方都用到了hash算法
-RC管理中用到的hash数组中用到的hash
+            
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/05/27</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/03</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href="/2019/06/03/TCP报文/">
+            
+                <span>TCP报文</span>
+        </a>
+        <div class="abstract-content">
+            这是读《TCP/IP》的笔记之一，很多内容都是书上看的，然后图片是根据书中的内容绘制出来的。ps：TCP/IP这本书，真的有点厚，不知道什么时候能看完。
+TCP报文结构TCP头部结构
+
+每个字段的含义CWR:通知接收方，已将拥塞窗口缩小（跟下面的ECE一起用）ECE:通知接收方，接收方到这边的网络有阻塞URG:头部的紧急指针是否有效ACK:响应PSH:不缓存，马上处理RST:连接重置SYN:建立连接FIN:关闭连接
+TCP连接管理以上内容解释完之后，来看一下TCP为什么是安全可靠的
+首先是连接的过程，采用了我们耳熟能详的“三次握手”，请看下面这张图片解释一下其中的几个状态: 
+
+SYN-...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/03</span>
             </div>
             <!-- tags  -->
             
@@ -735,9 +764,20 @@ definitions wikipedia
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 13
+        Total : 14
         </div>
         <!-- search  -->
         
@@ -753,7 +793,12 @@ definitions wikipedia
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/27</span><a class="archive-post-title" href="/2019/05/27/objc源码中用到的hash算法/">objc源码中用到的hash算法</a>
+            <span class="archive-post-date">06/03</span><a class="archive-post-title" href="/2019/06/03/用户轨迹追踪优化思路/">用户轨迹追踪优化思路</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/03</span><a class="archive-post-title" href="/2019/06/03/TCP报文/">TCP报文</a>
         </li>
     
     
@@ -777,7 +822,12 @@ definitions wikipedia
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/深入比较strong和copy两种修饰符/">深入比较strong和copy两种修饰符</a>
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/设计一个合理的蓝牙框架/">设计一个合理的蓝牙框架</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/catogory的几个问题/">关于catogory的几个问题</a>
         </li>
     
     
@@ -792,7 +842,7 @@ definitions wikipedia
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/iOS事件响应链/">iOS事件响应链</a>
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/几种变量类型/">几种变量类型</a>
         </li>
     
     
@@ -802,17 +852,12 @@ definitions wikipedia
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/设计一个合理的蓝牙框架/">设计一个合理的蓝牙框架</a>
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/做用户轨迹追踪时的思考/">做用户轨迹追踪时的思考</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/catogory的几个问题/">关于catogory的几个问题</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/几种变量类型/">几种变量类型</a>
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/iOS事件响应链/">iOS事件响应链</a>
         </li>
     
     
@@ -822,7 +867,7 @@ definitions wikipedia
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/做用户轨迹追踪时的思考/">做用户轨迹追踪时的思考</a>
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/深入比较strong和copy两种修饰符/">深入比较strong和copy两种修饰符</a>
         </li>
     
     </ul></div>
@@ -830,9 +875,9 @@ definitions wikipedia
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="objc iOS OC"><span class="iconfont-archer">&#xe606;</span>objc iOS OC</span>
-    
         <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="objc iOS OC"><span class="iconfont-archer">&#xe606;</span>objc iOS OC</span>
     
         <span class="sidebar-tag-name" data-tags="project"><span class="iconfont-archer">&#xe606;</span>project</span>
     
