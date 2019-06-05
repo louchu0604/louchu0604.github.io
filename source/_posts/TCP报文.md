@@ -54,4 +54,4 @@ http://static.kaolagogogo.fun/blogimage/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.
 一句话总结就是：加法增大，乘法减小
 * 快重传和快恢复
 如果发送发里连续收到三个重复的ACK，则不必等待重传计时器，即刻重传。
- 
+ # 保活
