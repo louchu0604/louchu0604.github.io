@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>TCP报文 · KAOLA&#39;s note</title>
+    <title>TCP连接管理与保活机制 · KAOLA&#39;s note</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -217,7 +217,7 @@
                 <a href="/">KAOLA&#39;s note.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">TCP报文</a>
+                <a href="#" class="post-name">TCP连接管理与保活机制</a>
             </div>
     </div>
     
@@ -247,7 +247,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            TCP报文
+            TCP连接管理与保活机制
             <!-- 404 -->
             
         </h1>
@@ -264,9 +264,15 @@ height:50vh;
             <div class="post-intros">
                 <!-- 文章页标签  -->
                 
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="TCP">TCP</a>
+    
+</div>
+                
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">547</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">669</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -413,11 +419,19 @@ height:50vh;
 <li>LAST_ASK 服务端发出FIN后 等待客户端的响应</li>
 <li>TIME_WAIT 客户端收到服务端的FIN 发出ACK之后 等待一段时间（防止这个ACK包没有成功发送）</li>
 </ul>
-<h1 id="TCP流量控制"><a href="#TCP流量控制" class="headerlink" title="TCP流量控制"></a>TCP流量控制</h1><h1 id="TCP拥塞控制"><a href="#TCP拥塞控制" class="headerlink" title="TCP拥塞控制"></a>TCP拥塞控制</h1><p>拥塞控制主要体现在以下几个方面</p>
-<ul>
-<li>慢开始与拥塞避免<br>一句话总结就是：加法增大，乘法减小</li>
-<li>快重传和快恢复<br>如果发送发里连续收到三个重复的ACK，则不必等待重传计时器，即刻重传。<h1 id="保活"><a href="#保活" class="headerlink" title="保活"></a>保活</h1></li>
-</ul>
+<h1 id="保活"><a href="#保活" class="headerlink" title="保活"></a>保活</h1><h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>发送端开启保活功能</p>
+<ol>
+<li>在保活时间内如果处于非活动状态，发送保活探测报文</li>
+<li>如果没有响应，则经过保活时间间隔之后继续发送，直到达到上限（这里的上限指的是保活探测数）</li>
+<li>如果没有响应，则认为数据无法到达，连接将被断开</li>
+<li>保活探测报文为空报文或一个字节的报文，序列号为接收端发送的ACK报文的最大序列号减1（原因：这个序列号接收端已经收到 所以不会影响之前的数据）</li>
+</ol>
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><ol>
+<li>接收端仍在工作，并响应了探测报文</li>
+<li>接收端已断开</li>
+<li>接收端重启了</li>
+<li>接收端仍在工作，但因为某种原因没有收到ACK</li>
+</ol>
 
     </article>
     <!-- license  -->
@@ -427,8 +441,8 @@ height:50vh;
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href="/2019/06/03/用户轨迹追踪优化思路/" title="用户轨迹追踪优化思路">
-                    <div class="nextTitle">用户轨迹追踪优化思路</div>
+                <a href="/2019/06/06/TCP超时与重传/" title="TCP超时与重传">
+                    <div class="nextTitle">TCP超时与重传</div>
                 </a>
             
         </li>
@@ -555,7 +569,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP报文结构"><span class="toc-number">1.</span> <span class="toc-text">TCP报文结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP连接管理"><span class="toc-number">2.</span> <span class="toc-text">TCP连接管理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP流量控制"><span class="toc-number">3.</span> <span class="toc-text">TCP流量控制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP拥塞控制"><span class="toc-number">4.</span> <span class="toc-text">TCP拥塞控制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#保活"><span class="toc-number">5.</span> <span class="toc-text">保活</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP报文结构"><span class="toc-number">1.</span> <span class="toc-text">TCP报文结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP连接管理"><span class="toc-number">2.</span> <span class="toc-text">TCP连接管理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#保活"><span class="toc-number">3.</span> <span class="toc-text">保活</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#过程"><span class="toc-number">3.1.</span> <span class="toc-text">过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结果"><span class="toc-number">3.2.</span> <span class="toc-text">结果</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -786,12 +800,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/03</span><a class="archive-post-title" href="/2019/06/03/用户轨迹追踪优化思路/">用户轨迹追踪优化思路</a>
+            <span class="archive-post-date">06/06</span><a class="archive-post-title" href="/2019/06/06/TCP超时与重传/">TCP超时与重传</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/03</span><a class="archive-post-title" href="/2019/06/03/TCP报文/">TCP报文</a>
+            <span class="archive-post-date">06/03</span><a class="archive-post-title" href="/2019/06/03/TCP报文/">TCP连接管理与保活机制</a>
         </li>
     
     
@@ -820,11 +834,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/catogory的几个问题/">关于catogory的几个问题</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/app启动过程/">app启动过程</a>
         </li>
     
@@ -835,7 +844,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/几种变量类型/">几种变量类型</a>
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/catogory的几个问题/">关于catogory的几个问题</a>
         </li>
     
     
@@ -845,7 +854,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/做用户轨迹追踪时的思考/">做用户轨迹追踪时的思考</a>
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/消息转发/">消息转发</a>
         </li>
     
     
@@ -855,12 +864,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/消息转发/">消息转发</a>
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/深入比较strong和copy两种修饰符/">深入比较strong和copy两种修饰符</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/深入比较strong和copy两种修饰符/">深入比较strong和copy两种修饰符</a>
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/几种变量类型/">几种变量类型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href="/2018/11/26/做用户轨迹追踪时的思考/">做用户轨迹追踪时的思考</a>
         </li>
     
     </ul></div>
@@ -868,9 +882,11 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
+        <span class="sidebar-tag-name" data-tags="TCP"><span class="iconfont-archer">&#xe606;</span>TCP</span>
     
         <span class="sidebar-tag-name" data-tags="objc iOS OC"><span class="iconfont-archer">&#xe606;</span>objc iOS OC</span>
+    
+        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
     
         <span class="sidebar-tag-name" data-tags="project"><span class="iconfont-archer">&#xe606;</span>project</span>
     
