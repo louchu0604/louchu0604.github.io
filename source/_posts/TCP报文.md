@@ -37,6 +37,10 @@ http://static.kaolagogogo.fun/blogimage/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.
 * SYN-RECEIVED (SYN_RCVD)：服务端在接收到一个连接请求和发送一个链接请求之后，收到应答之前的状态
 第一次和第二次握手可以保证客户端向服务端发送数据是可靠的
 第二次和第三次握手可以保证服务端向客户端发送数据是可靠的
+* 第一次的序列号为什么是随机的
+    * 防止同一个连接的不同实例
+    * 防止TCP系列号欺骗
+    * 随机序列号的生成： ISN = M + F(localhost, localport, remotehost, remoteport)
 
 断开连接过程，采用的是“四次挥手”
 ![四次挥手](http://static.kaolagogogo.fun/blogimage/TCP%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.jpg "四次挥手")
