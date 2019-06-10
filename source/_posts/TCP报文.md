@@ -65,3 +65,20 @@ http://static.kaolagogogo.fun/blogimage/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.
 2. 接收端已断开
 3. 接收端重启了
 4. 接收端仍在工作，但因为某种原因没有收到ACK
+
+#UDP的连接 
+#TCP fastopen（TFO）
+TCP一般情况下需要三次握手才进行数据传输，相形之下，比UDP多了数据传输时间
+TFO就是在这样的背景下提出来的，它允许TCP在握手阶段就传输数据，从而节省时间。
+## TFO的过程
+### 客户端通过一个普通的三次握手获取FOC（fast open cookie）
+* 客户端发送一个带有fast open选项的的SYN ，同时携带一个空的cookie域来请求cookie
+* 服务端收到后，产生一个cookie，通过SYN-ACK包的fast open选项返回
+* 客户端缓存该cookie
+### 执行TFO 
+* 客户端发送带有数据的SYN包，同时在fast open选项中携带之前的cookie
+* 服务端收到后，验证该cookie，如果cookie有效，服务端返回SYN-ACK包，同时把接收到的数据传递给应用层。如果cookie无效，服务端会丢弃该包中的数据，同时返回一个SYN-ACk
+* cookie如果有效，服务端可以发送相应数据
+* 客户端发送ACK来确认服务端的SYN和数据，如果客户端的数据没有被确认（cookie失效之类的），客户端将重传数据（重传机制）
+* 客户端获取到FOC之后，可以重复fast open 直到cookie过去
+Q1：服务端如何验证cookie
