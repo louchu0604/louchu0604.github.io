@@ -272,7 +272,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">669</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">1.1k</span>阅读时长: <span class="post-count reading-time">3 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -410,6 +410,12 @@ height:50vh;
 <ul>
 <li>SYN-SENT:客户端在发送一个连接请求之后，收到应答之前的状态</li>
 <li>SYN-RECEIVED (SYN_RCVD)：服务端在接收到一个连接请求和发送一个链接请求之后，收到应答之前的状态<br>第一次和第二次握手可以保证客户端向服务端发送数据是可靠的<br>第二次和第三次握手可以保证服务端向客户端发送数据是可靠的</li>
+<li>第一次的序列号为什么是随机的<ul>
+<li>防止同一个连接的不同实例</li>
+<li>防止TCP系列号欺骗</li>
+<li>随机序列号的生成： ISN = M + F(localhost, localport, remotehost, remoteport)</li>
+</ul>
+</li>
 </ul>
 <p>断开连接过程，采用的是“四次挥手”<br><img src="http://static.kaolagogogo.fun/blogimage/TCP%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.jpg" alt="四次挥手" title="四次挥手"><br>解释一下其中的几个状态</p>
 <ul>
@@ -432,6 +438,18 @@ height:50vh;
 <li>接收端重启了</li>
 <li>接收端仍在工作，但因为某种原因没有收到ACK</li>
 </ol>
+<p>#UDP的连接 </p>
+<p>#TCP fastopen（TFO）<br>TCP一般情况下需要三次握手才进行数据传输，相形之下，比UDP多了数据传输时间<br>TFO就是在这样的背景下提出来的，它允许TCP在握手阶段就传输数据，从而节省时间。</p>
+<h2 id="TFO的过程"><a href="#TFO的过程" class="headerlink" title="TFO的过程"></a>TFO的过程</h2><h3 id="客户端通过一个普通的三次握手获取FOC（fast-open-cookie）"><a href="#客户端通过一个普通的三次握手获取FOC（fast-open-cookie）" class="headerlink" title="客户端通过一个普通的三次握手获取FOC（fast open cookie）"></a>客户端通过一个普通的三次握手获取FOC（fast open cookie）</h3><ul>
+<li>客户端发送一个带有fast open选项的的SYN ，同时携带一个空的cookie域来请求cookie</li>
+<li>服务端收到后，产生一个cookie，通过SYN-ACK包的fast open选项返回</li>
+<li>客户端缓存该cookie<h3 id="执行TFO"><a href="#执行TFO" class="headerlink" title="执行TFO"></a>执行TFO</h3></li>
+<li>客户端发送带有数据的SYN包，同时在fast open选项中携带之前的cookie</li>
+<li>服务端收到后，验证该cookie，如果cookie有效，服务端返回SYN-ACK包，同时把接收到的数据传递给应用层。如果cookie无效，服务端会丢弃该包中的数据，同时返回一个SYN-ACk</li>
+<li>cookie如果有效，服务端可以发送相应数据</li>
+<li>客户端发送ACK来确认服务端的SYN和数据，如果客户端的数据没有被确认（cookie失效之类的），客户端将重传数据（重传机制）</li>
+<li>客户端获取到FOC之后，可以重复fast open 直到cookie过去<br>Q1：服务端如何验证cookie<h1 id="TCP-reset"><a href="#TCP-reset" class="headerlink" title="TCP reset"></a>TCP reset</h1></li>
+</ul>
 
     </article>
     <!-- license  -->
@@ -569,7 +587,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP报文结构"><span class="toc-number">1.</span> <span class="toc-text">TCP报文结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP连接管理"><span class="toc-number">2.</span> <span class="toc-text">TCP连接管理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#保活"><span class="toc-number">3.</span> <span class="toc-text">保活</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#过程"><span class="toc-number">3.1.</span> <span class="toc-text">过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结果"><span class="toc-number">3.2.</span> <span class="toc-text">结果</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP报文结构"><span class="toc-number">1.</span> <span class="toc-text">TCP报文结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP连接管理"><span class="toc-number">2.</span> <span class="toc-text">TCP连接管理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#保活"><span class="toc-number">3.</span> <span class="toc-text">保活</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#过程"><span class="toc-number">3.1.</span> <span class="toc-text">过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结果"><span class="toc-number">3.2.</span> <span class="toc-text">结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TFO的过程"><span class="toc-number">3.3.</span> <span class="toc-text">TFO的过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端通过一个普通的三次握手获取FOC（fast-open-cookie）"><span class="toc-number">3.3.1.</span> <span class="toc-text">客户端通过一个普通的三次握手获取FOC（fast open cookie）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#执行TFO"><span class="toc-number">3.3.2.</span> <span class="toc-text">执行TFO</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP-reset"><span class="toc-number">4.</span> <span class="toc-text">TCP reset</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
