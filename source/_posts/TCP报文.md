@@ -41,7 +41,8 @@ http://static.kaolagogogo.fun/blogimage/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.
     * 防止同一个连接的不同实例
     * 防止TCP系列号欺骗
     * 随机序列号的生成： ISN = M + F(localhost, localport, remotehost, remoteport)
-
+# 握手失败的处理
+如果第三次握手失败了，服务器不会重传报文，而是发送RTS，进入关闭状态，原因是为了防止SYN攻击
 断开连接过程，采用的是“四次挥手”
 ![四次挥手](http://static.kaolagogogo.fun/blogimage/TCP%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.jpg "四次挥手")
 解释一下其中的几个状态
