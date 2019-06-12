@@ -413,12 +413,9 @@ height:50vh;
 <li>第一次的序列号为什么是随机的<ul>
 <li>防止同一个连接的不同实例</li>
 <li>防止TCP系列号欺骗</li>
-<li>随机序列号的生成： ISN = M + F(localhost, localport, remotehost, remoteport)</li>
+<li>随机序列号的生成： ISN = M + F(localhost, localport, remotehost, remoteport)<h1 id="握手失败的处理"><a href="#握手失败的处理" class="headerlink" title="握手失败的处理"></a>握手失败的处理</h1>如果第三次握手失败了，服务器不会重传报文，而是发送RTS，进入关闭状态，原因是为了防止SYN攻击<br>断开连接过程，采用的是“四次挥手”<br><img src="http://static.kaolagogogo.fun/blogimage/TCP%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.jpg" alt="四次挥手" title="四次挥手"><br>解释一下其中的几个状态</li>
 </ul>
 </li>
-</ul>
-<p>断开连接过程，采用的是“四次挥手”<br><img src="http://static.kaolagogogo.fun/blogimage/TCP%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.jpg" alt="四次挥手" title="四次挥手"><br>解释一下其中的几个状态</p>
-<ul>
 <li>FIN_WAIT_1  客户端发出断开连接的请求后，等待ack回复的状态 </li>
 <li>CLOSE_WAIT  服务端等待对方的断开连接请求 </li>
 <li>FIN_WAIT_2  等到服务端的断开请求</li>
@@ -587,7 +584,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP报文结构"><span class="toc-number">1.</span> <span class="toc-text">TCP报文结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP连接管理"><span class="toc-number">2.</span> <span class="toc-text">TCP连接管理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#保活"><span class="toc-number">3.</span> <span class="toc-text">保活</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#过程"><span class="toc-number">3.1.</span> <span class="toc-text">过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结果"><span class="toc-number">3.2.</span> <span class="toc-text">结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TFO的过程"><span class="toc-number">3.3.</span> <span class="toc-text">TFO的过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端通过一个普通的三次握手获取FOC（fast-open-cookie）"><span class="toc-number">3.3.1.</span> <span class="toc-text">客户端通过一个普通的三次握手获取FOC（fast open cookie）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#执行TFO"><span class="toc-number">3.3.2.</span> <span class="toc-text">执行TFO</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP-reset"><span class="toc-number">4.</span> <span class="toc-text">TCP reset</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP报文结构"><span class="toc-number">1.</span> <span class="toc-text">TCP报文结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP连接管理"><span class="toc-number">2.</span> <span class="toc-text">TCP连接管理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#握手失败的处理"><span class="toc-number">3.</span> <span class="toc-text">握手失败的处理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#保活"><span class="toc-number">4.</span> <span class="toc-text">保活</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#过程"><span class="toc-number">4.1.</span> <span class="toc-text">过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结果"><span class="toc-number">4.2.</span> <span class="toc-text">结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TFO的过程"><span class="toc-number">4.3.</span> <span class="toc-text">TFO的过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端通过一个普通的三次握手获取FOC（fast-open-cookie）"><span class="toc-number">4.3.1.</span> <span class="toc-text">客户端通过一个普通的三次握手获取FOC（fast open cookie）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#执行TFO"><span class="toc-number">4.3.2.</span> <span class="toc-text">执行TFO</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP-reset"><span class="toc-number">5.</span> <span class="toc-text">TCP reset</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
